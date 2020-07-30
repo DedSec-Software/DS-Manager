@@ -1,0 +1,114 @@
+#  Copyright (c) 2020. Mohamed Zumair <mhdzumair@gmail.com>
+from PySide2.QtWidgets import QMainWindow, QCompleter, QDialog
+from PySide2.QtCore import QDate, Qt
+from PySide2.QtGui import QDoubleValidator
+from dsmanager import Ui_DedSecWindow
+from about import Ui_Dialog
+
+
+class Control(QMainWindow, Ui_DedSecWindow):
+    def __init__(self, *args, **kwargs):
+        super(Control, self).__init__(*args, **kwargs)
+        self.setupUi(self)
+        self.date_of_entry.setDate(QDate.currentDate())
+        self.report_date_from.setDate(QDate.currentDate())
+        self.report_date_to.setDate(QDate.currentDate())
+        self.trans_type.currentTextChanged.connect(self.set_method)
+        self.method_of_trans.currentTextChanged.connect(self.more_trans_complete)
+        self.clear_entry_button.pressed.connect(self.clear_entries)
+        self.actionAbut_DS_Manager.triggered.connect(self.show_about_ds)
+        self.only_double = QDoubleValidator()
+        self.money.setValidator(self.only_double)
+        self.set_method()
+
+    def set_method(self):
+        if self.trans_type.currentText() == "Income" or "Expense":
+            self.method_of_trans.show()
+            self.label_3.show()
+            self.label_9.show()
+            self.more_trans_detail.show()
+            self.label_10.show()
+            self.radioButton.show()
+            self.radioButton_2.show()
+
+        if self.trans_type.currentText() == "Income":
+            self.method_of_trans.clear()
+            self.method_of_trans.insertItems(
+                0,
+                [
+                    "Shantha Money",
+                    "Till Box",
+                    "Rent",
+                    "Jumma Collection",
+                    "Building Fund Collection",
+                    "Others",
+                ],
+            )
+        elif self.trans_type.currentText() == "Expense":
+            self.method_of_trans.clear()
+            self.method_of_trans.insertItems(
+                0,
+                [
+                    "Salary",
+                    "Electricity Bill",
+                    "Water Bill",
+                    "Refreshment",
+                    "Jumma Expenses",
+                    "Building Expenses",
+                    "Maintenance",
+                ],
+            )
+        else:
+            self.method_of_trans.hide()
+            self.label_3.hide()
+            self.label_9.hide()
+            self.more_trans_detail.hide()
+            self.label_10.hide()
+            self.radioButton.hide()
+            self.radioButton_2.hide()
+
+    def more_trans_complete(self):
+        curr_text = self.method_of_trans.currentText()
+        if curr_text == "Building Expenses" or curr_text == "Building Fund Collection":
+            self.label_10.hide()
+            self.radioButton.hide()
+            self.radioButton_2.hide()
+        else:
+            self.label_10.show()
+            self.radioButton.show()
+            self.radioButton_2.show()
+
+        helping = []
+        if curr_text == "Salary":
+            for value in (
+                "Bash Imam",
+                "Ass. Imam",
+                "Muazzin",
+                "Ass. Muazzin",
+                "Sibithi",
+                "Akshah",
+                "Sadarth",
+            ):
+                helping.append(value)
+        elif curr_text == "Till Box":
+            for value in ("1", "2"):
+                helping.append(value)
+        elif curr_text == "Maintenance":
+            for value in ("Labourer charge", "Material charge", "Cleaning"):
+                helping.append(value)
+
+        completer = QCompleter(helping)
+        completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+        self.more_trans_detail.setCompleter(completer)
+
+    def clear_entries(self):
+        self.trans_type.setCurrentIndex(0)
+        self.more_trans_detail.clear()
+        self.money.clear()
+        self.date_of_entry.setDate(QDate.currentDate())
+
+    def show_about_ds(self):
+        dialog = QDialog()
+        about = Ui_Dialog()
+        about.setupUi(dialog)
+        dialog.exec_()
