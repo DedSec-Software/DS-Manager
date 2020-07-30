@@ -6,7 +6,9 @@ class Model:
         self.conn = connect("account.db")
         self.cur = self.conn.cursor()
 
-    def data_entry(self, trans_type, method_of_trans, description, date, money_type, amount):
+    def data_entry(
+        self, trans_type, method_of_trans, description, date, money_type, amount: float
+    ):
         self.cur.execute(
             f"INSERT INTO {'INCOME' if trans_type == 'Income' else 'EXPENSE'} VALUES (:name,:desc, :date, :money_type, :amount)",
             {
@@ -19,7 +21,7 @@ class Model:
         )
         self.conn.commit()
 
-    def update_entry(self, trans_type, money_type, date, amount):
+    def update_entry(self, trans_type, money_type, date, amount: float):
         if money_type == "Bank":
             self.cur.execute(
                 f"UPDATE BANK SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date = :date WHERE id='1'",
@@ -34,7 +36,7 @@ class Model:
 
         self.conn.commit()
 
-    def bank_update(self, trans_type, date, amount):
+    def bank_update(self, trans_type, date, amount: float):
 
         date = str(date)
 
