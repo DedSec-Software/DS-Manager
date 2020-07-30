@@ -36,8 +36,10 @@
     <normaloff>inc/icon.ico</normaloff>inc/icon.ico</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMainWindow{background-image:url(new1.jpg);
-background-repeat:none;}
+   <string notr="true">QMainWindow{
+background-image:url(:/images/background.jpg);
+background-repeat:none;
+}
 QPushButton {
 	border: 2px solid rgb(52, 59, 72);
 	border-radius: 5px;	
@@ -107,7 +109,7 @@ QPushButton:pressed {
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../inc/includes.qrc">:/icons/mosque.jpg</pixmap>
+         <pixmap resource="../inc/includes.qrc">:/images/mosque.jpg</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -154,7 +156,6 @@ QPushButton:pressed {
         <property name="styleSheet">
          <string notr="true">color: white;
 padding:10px;
-v-align:center;
 text-align:left;</string>
         </property>
         <property name="text">
@@ -189,67 +190,81 @@ text-align:left;</string>
       </item>
      </layout>
     </item>
-    <item alignment="Qt::AlignHCenter">
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="enabled">
-       <bool>true</bool>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
       </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+      <property name="leftMargin">
+       <number>60</number>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>900</width>
-        <height>16777215</height>
-       </size>
+      <property name="topMargin">
+       <number>10</number>
       </property>
-      <property name="font">
-       <font>
-        <family>Tahoma</family>
-        <pointsize>10</pointsize>
-        <weight>75</weight>
-        <italic>false</italic>
-        <bold>true</bold>
-       </font>
+      <property name="rightMargin">
+       <number>30</number>
       </property>
-      <property name="acceptDrops">
-       <bool>false</bool>
+      <property name="bottomMargin">
+       <number>25</number>
       </property>
-      <property name="toolTipDuration">
-       <number>-1</number>
-      </property>
-      <property name="accessibleDescription">
-       <string notr="true" comment="0"/>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget{
-background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(173, 224, 209, 207), stop:0.965174 rgba(165, 218, 214, 170));
-height:30%;
-border:0px;
-border-radius: 40px;
-
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>1500</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Tahoma</family>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="toolTipDuration">
+         <number>-1</number>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true" comment="0"/>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget{
+	background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(173, 224, 209, 207), stop:0.965174 rgba(165, 218, 214, 170));
+	border:0px;
+	height:30%;
 }
 
-QTabWidget:pane{
-border: 0px; background-color:rgba(rgb(220, 255, 247));
-border-radius: 40px;}
-
-data_entry_tab{border-radius: 40px;}
-
+QTabWidget::pane {
+	border: 0;
+	background-color:rgb(220, 255, 247);
+	border-radius: 10px;
+}
 
 QCalendarWidget QToolButton{
-
   	color: black;
-  	background-color:rgb(156, 255, 231);}
+  	background-color:rgb(156, 255, 231);
+}
 
  
 
@@ -263,100 +278,346 @@ QCalendarWidget QAbstractItemView:enabled
   }
 
 QTabBar::tab {
+	width: 200;
 	background: gray;
 	color: white;
 	padding: 10px; 
+	border-radius: 40px;
 }
 
 QTabBar::tab:selected {
 	background: qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(173, 224, 209, 207), stop:0.965174 rgba(165, 218, 214, 170));
+	color: rgb(9, 0, 79);
+	padding: 10px; 
+	border-radius: 40px;
+}</string>
+        </property>
+        <property name="tabPosition">
+         <enum>QTabWidget::North</enum>
+        </property>
+        <property name="tabShape">
+         <enum>QTabWidget::Rounded</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="elideMode">
+         <enum>Qt::ElideNone</enum>
+        </property>
+        <property name="documentMode">
+         <bool>false</bool>
+        </property>
+        <property name="tabsClosable">
+         <bool>false</bool>
+        </property>
+        <property name="movable">
+         <bool>true</bool>
+        </property>
+        <property name="tabBarAutoHide">
+         <bool>false</bool>
+        </property>
+        <widget class="QWidget" name="data_entry_tab">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <attribute name="title">
+          <string>Data Entry</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+          <property name="leftMargin">
+           <number>80</number>
+          </property>
+          <property name="topMargin">
+           <number>40</number>
+          </property>
+          <property name="rightMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <property name="horizontalSpacing">
+           <number>10</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>30</number>
+          </property>
+          <item row="5" column="1">
+           <widget class="QLabel" name="label_10">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <strikeout>false</strikeout>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Type Of Money Source</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="7">
+           <widget class="QComboBox" name="trans_type">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	 background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(50, 186, 144, 52), stop:0.482587 rgba(65, 156, 128, 54), stop:0.975124 rgba(75, 164, 181, 80));
+	
+		
+	
+
+	
+
+    
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+   
+	
+}
+QComboBox QAbstractItemView {
+	padding: 10px;
+
+	background-color:rgb(170, 255, 230)
+	
+ 
 }
 
-QTabWidget::pane {
-	border: 0;
+QComboBox QAbstractItemView{border-radius: 5px;
+	border: 2px ;
+	padding: 5px;
+	padding-left: 10px;
+    }</string>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToContents</enum>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">Income</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Expense</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bank Deposite</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Bank Withdraw</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="label_5">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <strikeout>false</strikeout>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>Enter the money</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="7">
+           <widget class="QLineEdit" name="money">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
 }</string>
-      </property>
-      <property name="tabPosition">
-       <enum>QTabWidget::North</enum>
-      </property>
-      <property name="tabShape">
-       <enum>QTabWidget::Rounded</enum>
-      </property>
-      <property name="currentIndex">
-       <number>1</number>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="elideMode">
-       <enum>Qt::ElideNone</enum>
-      </property>
-      <property name="documentMode">
-       <bool>false</bool>
-      </property>
-      <property name="tabsClosable">
-       <bool>false</bool>
-      </property>
-      <property name="movable">
-       <bool>true</bool>
-      </property>
-      <property name="tabBarAutoHide">
-       <bool>false</bool>
-      </property>
-      <widget class="QWidget" name="data_entry_tab">
-       <property name="font">
-        <font>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <attribute name="title">
-        <string>Data Entry</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
-        </property>
-        <property name="leftMargin">
-         <number>80</number>
-        </property>
-        <property name="topMargin">
-         <number>40</number>
-        </property>
-        <property name="rightMargin">
-         <number>20</number>
-        </property>
-        <property name="bottomMargin">
-         <number>10</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>10</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>30</number>
-        </property>
-        <item row="12" column="4">
-         <widget class="QPushButton" name="enter_data_button">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Tahoma</family>
-            <pointsize>9</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly</set>
+            </property>
+            <property name="text">
+             <string notr="true"/>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <strikeout>false</strikeout>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Date of Entry</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="7">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QRadioButton" name="radioButton_2">
+              <property name="font">
+               <font>
+                <family>Candara</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Cash</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton">
+              <property name="font">
+               <font>
+                <family>Candara</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Bank</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="11" column="2">
+           <widget class="QPushButton" name="clear_entry_button">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
 background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0547264 rgba(10, 103, 95, 209), stop:1 rgba(13, 136, 125, 209));
 width:110%;
 height:40%;
@@ -372,819 +633,643 @@ background-color:rgb(199, 248, 255);
 color:black;
 
 }</string>
-          </property>
-          <property name="text">
-           <string>Enter Data</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="3">
-         <spacer name="horizontalSpacer_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>100</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="5" column="7">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QRadioButton" name="radioButton_2">
-            <property name="font">
-             <font>
-              <family>Candara</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
             </property>
             <property name="text">
-             <string>Cash</string>
+             <string>Clear</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QRadioButton" name="radioButton">
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="font">
              <font>
               <family>Candara</family>
-              <pointsize>10</pointsize>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <strikeout>false</strikeout>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>Transaction Type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="4">
+           <widget class="QLabel" name="label_9">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <strikeout>false</strikeout>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>Write or Select more detail about Transection</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="4">
+           <widget class="QPushButton" name="enter_data_button">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>9</pointsize>
               <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
              </font>
             </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0547264 rgba(10, 103, 95, 209), stop:1 rgba(13, 136, 125, 209));
+width:110%;
+height:40%;
+color:white;
+border-radius:8px;
+}
+
+
+  QPushButton:hover:!pressed
+{
+  border: 2px solid rgb(41, 135, 140);
+background-color:rgb(199, 248, 255);
+color:black;
+
+}</string>
+            </property>
             <property name="text">
-             <string>Bank</string>
+             <string>Enter Data</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="7">
+           <widget class="QDateEdit" name="date_of_entry">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QDateEdit{
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 5px;
+	padding-left: 10px;
+
+   background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(50, 186, 144, 52), stop:0.482587 rgba(65, 156, 128, 54), stop:0.975124 rgba(75, 164, 181, 80));
+		
+		
+}
+QDateEdit:hover{
+	border: 2px solid rgb(64, 71, 88);
+   
+	
+		
+  
+}
+
+QCalendarWidget QToolButton{
+
+  	color: black;
+  	background-color:rgb(156, 255, 231);}
+
+ 
+
+QCalendarWidget QAbstractItemView:enabled 
+  {
+  
+  	color: black;  
+  	background-color: rgb(198, 255, 232);  
+  	selection-background-color: rgb(64, 64, 64); 
+  	selection-color: rgb(0, 255, 0); 
+  }</string>
+            </property>
+            <property name="minimumDateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>1767</year>
+              <month>9</month>
+              <day>14</day>
+             </datetime>
+            </property>
+            <property name="displayFormat">
+             <string>dd/MM/yyyy</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <strikeout>false</strikeout>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>Method of Transaction</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="7">
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>100</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="7">
+           <widget class="QLineEdit" name="more_trans_detail">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}</string>
+            </property>
+            <property name="cursorMoveStyle">
+             <enum>Qt::VisualMoveStyle</enum>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="3">
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>100</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="7">
+           <widget class="QComboBox" name="method_of_trans">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="palette">
+             <palette>
+              <active>
+               <colorrole role="Button">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+               <colorrole role="Base">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+               <colorrole role="Window">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+              </active>
+              <inactive>
+               <colorrole role="Button">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+               <colorrole role="Base">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+               <colorrole role="Window">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+              </inactive>
+              <disabled>
+               <colorrole role="Button">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+               <colorrole role="Base">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+               <colorrole role="Window">
+                <brush brushstyle="LinearGradientPattern">
+                 <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+                  <gradientstop position="0.019900500000000">
+                   <color alpha="52">
+                    <red>50</red>
+                    <green>186</green>
+                    <blue>144</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.482587000000000">
+                   <color alpha="54">
+                    <red>65</red>
+                    <green>156</green>
+                    <blue>128</blue>
+                   </color>
+                  </gradientstop>
+                  <gradientstop position="0.975124000000000">
+                   <color alpha="80">
+                    <red>75</red>
+                    <green>164</green>
+                    <blue>181</blue>
+                   </color>
+                  </gradientstop>
+                 </gradient>
+                </brush>
+               </colorrole>
+              </disabled>
+             </palette>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	 background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(50, 186, 144, 52), stop:0.482587 rgba(65, 156, 128, 54), stop:0.975124 rgba(75, 164, 181, 80));
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+   
+}
+QComboBox QAbstractItemView {
+	padding: 10px;
+
+	background-color:rgb(170, 255, 230)
+	
+ 
+}
+
+QComboBox QAbstractItemView{border-radius: 5px;
+	border: 2px ;
+	padding: 5px;
+	padding-left: 10px;
+    }</string>
             </property>
            </widget>
           </item>
          </layout>
-        </item>
-        <item row="12" column="2">
-         <widget class="QPushButton" name="clear_entry_button">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+        </widget>
+        <widget class="QWidget" name="report_gen_tab">
+         <attribute name="title">
+          <string>Report Generator</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="leftMargin">
+           <number>80</number>
           </property>
-          <property name="font">
-           <font>
-            <family>Tahoma</family>
-            <pointsize>9</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
+          <property name="topMargin">
+           <number>20</number>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0547264 rgba(10, 103, 95, 209), stop:1 rgba(13, 136, 125, 209));
-width:110%;
-height:40%;
-color:white;
-border-radius:8px;
-}
-
-
-  QPushButton:hover:!pressed
-{
-  border: 2px solid rgb(41, 135, 140);
-background-color:rgb(199, 248, 255);
-color:black;
-
-}</string>
+          <property name="rightMargin">
+           <number>20</number>
           </property>
-          <property name="text">
-           <string>Clear</string>
+          <property name="bottomMargin">
+           <number>10</number>
           </property>
-          <property name="iconSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
+          <property name="horizontalSpacing">
+           <number>10</number>
           </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="label_3">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+          <property name="verticalSpacing">
+           <number>20</number>
           </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <strikeout>false</strikeout>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {border: 0px; background-color:rgba(0,0,0,0%);}</string>
-          </property>
-          <property name="text">
-           <string>Method of Transaction</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="9">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Maximum</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>10</width>
-            <height>30</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLabel" name="label_10">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <strikeout>false</strikeout>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {border: 0px; background-color:rgba(0,0,0,0%);}</string>
-          </property>
-          <property name="text">
-           <string>Type Of Money Source</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="10">
-         <spacer name="horizontalSpacer_7">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>100</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="7">
-         <widget class="QComboBox" name="method_of_trans">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>300</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Button">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-             <colorrole role="Base">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-             <colorrole role="Window">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Button">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-             <colorrole role="Base">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-             <colorrole role="Window">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Button">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-             <colorrole role="Base">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-             <colorrole role="Window">
-              <brush brushstyle="LinearGradientPattern">
-               <gradient startx="0.532552000000000" starty="0.000000000000000" endx="0.522000000000000" endy="0.926136000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
-                <gradientstop position="0.019900500000000">
-                 <color alpha="52">
-                  <red>50</red>
-                  <green>186</green>
-                  <blue>144</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.482587000000000">
-                 <color alpha="54">
-                  <red>65</red>
-                  <green>156</green>
-                  <blue>128</blue>
-                 </color>
-                </gradientstop>
-                <gradientstop position="0.975124000000000">
-                 <color alpha="80">
-                  <red>75</red>
-                  <green>164</green>
-                  <blue>181</blue>
-                 </color>
-                </gradientstop>
-               </gradient>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QComboBox{
-	 background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(50, 186, 144, 52), stop:0.482587 rgba(65, 156, 128, 54), stop:0.975124 rgba(75, 164, 181, 80));
-	
-		
-	
-
-	
-
-    
-}
-QComboBox:hover{
-	border: 2px solid rgb(64, 71, 88);
-   
-	
-}
-QComboBox QAbstractItemView {
-	padding: 10px;
-
-	background-color:rgb(170, 255, 230)
-	
- 
-}
-
-QComboBox QAbstractItemView{border-radius: 5px;
-	border: 2px ;
-	padding: 5px;
-	padding-left: 10px;
-    }</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="7">
-         <widget class="QComboBox" name="trans_type">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>300</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QComboBox{
-	 background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(50, 186, 144, 52), stop:0.482587 rgba(65, 156, 128, 54), stop:0.975124 rgba(75, 164, 181, 80));
-	
-		
-	
-
-	
-
-    
-}
-QComboBox:hover{
-	border: 2px solid rgb(64, 71, 88);
-   
-	
-}
-QComboBox QAbstractItemView {
-	padding: 10px;
-
-	background-color:rgb(170, 255, 230)
-	
- 
-}
-
-QComboBox QAbstractItemView{border-radius: 5px;
-	border: 2px ;
-	padding: 5px;
-	padding-left: 10px;
-    }</string>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QComboBox::AdjustToContents</enum>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <item>
-           <property name="text">
-            <string notr="true">Income</string>
-           </property>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Date From</string>
+            </property>
+           </widget>
           </item>
-          <item>
-           <property name="text">
-            <string>Expense</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Bank Deposite</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Bank Withdraw</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QLabel" name="label_5">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <strikeout>false</strikeout>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {border: 0px; background-color:rgba(0,0,0,0%);}</string>
-          </property>
-          <property name="text">
-           <string>Enter the money</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="label_2">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <strikeout>false</strikeout>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {border: 0px; background-color:rgba(0,0,0,0%);}</string>
-          </property>
-          <property name="text">
-           <string>Transaction Type</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1" colspan="4">
-         <widget class="QLabel" name="label_9">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <strikeout>false</strikeout>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {border: 0px; background-color:rgba(0,0,0,0%);}</string>
-          </property>
-          <property name="text">
-           <string>Write or Select more detail about Transection</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="7">
-         <spacer name="horizontalSpacer_8">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>100</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="3" column="7">
-         <widget class="QLineEdit" name="more_trans_detail">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>300</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLineEdit {
-	border-radius: 5px;
-	border: 2px solid rgb(27, 29, 35);
-	padding-left: 10px;
-}
-QLineEdit:hover {
-	border: 2px solid rgb(64, 71, 88);
-}
-QLineEdit:focus {
-	border: 2px solid rgb(91, 101, 124);
-}</string>
-          </property>
-          <property name="cursorMoveStyle">
-           <enum>Qt::VisualMoveStyle</enum>
-          </property>
-          <property name="clearButtonEnabled">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="7">
-         <widget class="QLineEdit" name="money">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>200</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLineEdit {
-	border-radius: 5px;
-	border: 2px solid rgb(27, 29, 35);
-	padding-left: 10px;
-}
-QLineEdit:hover {
-	border: 2px solid rgb(64, 71, 88);
-}
-QLineEdit:focus {
-	border: 2px solid rgb(91, 101, 124);
-}</string>
-          </property>
-          <property name="inputMethodHints">
-           <set>Qt::ImhDigitsOnly</set>
-          </property>
-          <property name="text">
-           <string notr="true"/>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="clearButtonEnabled">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="label_4">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <strikeout>false</strikeout>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {border: 0px; background-color:rgba(0,0,0,0%);}</string>
-          </property>
-          <property name="text">
-           <string>Date of Entry</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="7">
-         <widget class="QDateEdit" name="date_of_entry">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>130</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QDateEdit{
+          <item row="3" column="4">
+           <widget class="QDateEdit" name="report_date_from">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>false</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QDateEdit{
 	border-radius: 5px;
 	border: 2px solid rgb(27, 29, 35);
 	padding: 5px;
@@ -1217,200 +1302,91 @@ QCalendarWidget QAbstractItemView:enabled
   	selection-background-color: rgb(64, 64, 64); 
   	selection-color: rgb(0, 255, 0); 
   }</string>
-          </property>
-          <property name="minimumDateTime">
-           <datetime>
-            <hour>0</hour>
-            <minute>0</minute>
-            <second>0</second>
-            <year>1767</year>
-            <month>9</month>
-            <day>14</day>
-           </datetime>
-          </property>
-          <property name="displayFormat">
-           <string>dd/MM/yyyy</string>
-          </property>
-          <property name="calendarPopup">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="report_gen_tab">
-       <attribute name="title">
-        <string>Report Generator</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <property name="leftMargin">
-         <number>80</number>
-        </property>
-        <property name="topMargin">
-         <number>20</number>
-        </property>
-        <property name="rightMargin">
-         <number>20</number>
-        </property>
-        <property name="bottomMargin">
-         <number>10</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>10</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>20</number>
-        </property>
-        <item row="5" column="1" alignment="Qt::AlignHCenter">
-         <widget class="QLabel" name="label_7">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Tahoma</family>
-            <pointsize>9</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:rgb(0,0,0,0%)</string>
-          </property>
-          <property name="text">
-           <string>Date To</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1" alignment="Qt::AlignHCenter">
-         <widget class="QLabel" name="label_6">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Tahoma</family>
-            <pointsize>9</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:rgb(0,0,0,0%)</string>
-          </property>
-          <property name="text">
-           <string>Date From</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="2">
-         <widget class="QPushButton" name="preview_report_button">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0547264 rgba(10, 103, 95, 209), stop:1 rgba(13, 136, 125, 209));
-width:130%;
-height:40%;
-color:white;
-border-radius:8px;
-}
-
-QPushButton:hover:!pressed
-{
-  border: 2px solid rgb(41, 135, 140);
-background-color:rgb(199, 248, 255);
-color:black;
-}</string>
-          </property>
-          <property name="text">
-           <string>Preview Report</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="3" alignment="Qt::AlignHCenter">
-         <widget class="QComboBox" name="comboBox">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Tahoma</family>
-            <pointsize>9</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QComboBox{
-	border-radius: 5px;
-	border: 2px solid rgb(27, 29, 35);
-	padding: 5px;
-	padding-left: 10px;
-}
-QComboBox:hover{
-	border: 2px solid rgb(64, 71, 88);
-}
-QComboBox QAbstractItemView {
-	padding: 10px;
-}</string>
-          </property>
-          <item>
-           <property name="text">
-            <string>level 1</string>
-           </property>
+            </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2020</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="minimumDateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2010</year>
+              <month>9</month>
+              <day>14</day>
+             </datetime>
+            </property>
+            <property name="maximumDate">
+             <date>
+              <year>9999</year>
+              <month>11</month>
+              <day>30</day>
+             </date>
+            </property>
+            <property name="displayFormat">
+             <string>dd/MM/yyyy</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+            <property name="date">
+             <date>
+              <year>2020</year>
+              <month>1</month>
+              <day>1</day>
+             </date>
+            </property>
+           </widget>
           </item>
-          <item>
-           <property name="text">
-            <string>level 2</string>
-           </property>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Date To</string>
+            </property>
+           </widget>
           </item>
-         </widget>
-        </item>
-        <item row="3" column="3" alignment="Qt::AlignHCenter">
-         <widget class="QDateEdit" name="report_date_from">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <underline>false</underline>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QDateEdit{
+          <item row="4" column="4">
+           <widget class="QDateEdit" name="report_date_to">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>false</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QDateEdit{
 	border-radius: 5px;
 	border: 2px solid rgb(27, 29, 35);
 	padding: 5px;
@@ -1443,92 +1419,132 @@ QCalendarWidget QAbstractItemView:enabled
   	selection-background-color: rgb(64, 64, 64); 
   	selection-color: rgb(0, 255, 0); 
   }</string>
-          </property>
-          <property name="dateTime">
-           <datetime>
-            <hour>0</hour>
-            <minute>0</minute>
-            <second>0</second>
-            <year>2020</year>
-            <month>1</month>
-            <day>1</day>
-           </datetime>
-          </property>
-          <property name="minimumDateTime">
-           <datetime>
-            <hour>0</hour>
-            <minute>0</minute>
-            <second>0</second>
-            <year>2010</year>
-            <month>9</month>
-            <day>14</day>
-           </datetime>
-          </property>
-          <property name="maximumDate">
-           <date>
-            <year>9999</year>
-            <month>11</month>
-            <day>30</day>
-           </date>
-          </property>
-          <property name="displayFormat">
-           <string>dd/MM/yyyy</string>
-          </property>
-          <property name="calendarPopup">
-           <bool>true</bool>
-          </property>
-          <property name="date">
-           <date>
-            <year>2020</year>
-            <month>1</month>
-            <day>1</day>
-           </date>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1" alignment="Qt::AlignHCenter">
-         <widget class="QLabel" name="label_12">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Tahoma</family>
-            <pointsize>9</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:rgb(0,0,0,0%)</string>
-          </property>
-          <property name="text">
-           <string>Log Level</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="1">
-         <widget class="QPushButton" name="print_report_button">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
+            </property>
+            <property name="wrapping">
+             <bool>false</bool>
+            </property>
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
+            <property name="showGroupSeparator" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2020</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="minimumDateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2010</year>
+              <month>9</month>
+              <day>14</day>
+             </datetime>
+            </property>
+            <property name="currentSection">
+             <enum>QDateTimeEdit::DaySection</enum>
+            </property>
+            <property name="displayFormat">
+             <string>dd/MM/yyyy</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeZone</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Log Level</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="4">
+           <widget class="QComboBox" name="comboBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 5px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox QAbstractItemView {
+	padding: 10px;
+}</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>level 1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>level 2</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QPushButton" name="print_report_button">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
 background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0547264 rgba(10, 103, 95, 209), stop:1 rgba(13, 136, 125, 209));
 width:100%;
 height:40%;
@@ -1542,130 +1558,72 @@ QPushButton:hover:!pressed
 background-color:rgb(199, 248, 255);
 color:black;
 }</string>
-          </property>
-          <property name="text">
-           <string>Print Report</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="3" alignment="Qt::AlignHCenter">
-         <widget class="QDateEdit" name="report_date_to">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <underline>false</underline>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QDateEdit{
-	border-radius: 5px;
-	border: 2px solid rgb(27, 29, 35);
-	padding: 5px;
-	padding-left: 10px;
-
-   background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(50, 186, 144, 52), stop:0.482587 rgba(65, 156, 128, 54), stop:0.975124 rgba(75, 164, 181, 80));
-		
-		
-}
-QDateEdit:hover{
-	border: 2px solid rgb(64, 71, 88);
-   
-	
-		
-  
+            </property>
+            <property name="text">
+             <string>Print Report</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QPushButton" name="preview_report_button">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0547264 rgba(10, 103, 95, 209), stop:1 rgba(13, 136, 125, 209));
+width:130%;
+height:40%;
+color:white;
+border-radius:8px;
 }
 
-QCalendarWidget QToolButton{
-
-  	color: black;
-  	background-color:rgb(156, 255, 231);}
-
- 
-
-QCalendarWidget QAbstractItemView:enabled 
-  {
-  
-  	color: black;  
-  	background-color: rgb(198, 255, 232);  
-  	selection-background-color: rgb(64, 64, 64); 
-  	selection-color: rgb(0, 255, 0); 
-  }</string>
-          </property>
-          <property name="wrapping">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>false</bool>
-          </property>
-          <property name="showGroupSeparator" stdset="0">
-           <bool>false</bool>
-          </property>
-          <property name="dateTime">
-           <datetime>
-            <hour>0</hour>
-            <minute>0</minute>
-            <second>0</second>
-            <year>2020</year>
-            <month>1</month>
-            <day>1</day>
-           </datetime>
-          </property>
-          <property name="minimumDateTime">
-           <datetime>
-            <hour>0</hour>
-            <minute>0</minute>
-            <second>0</second>
-            <year>2010</year>
-            <month>9</month>
-            <day>14</day>
-           </datetime>
-          </property>
-          <property name="currentSection">
-           <enum>QDateTimeEdit::DaySection</enum>
-          </property>
-          <property name="displayFormat">
-           <string>dd/MM/yyyy</string>
-          </property>
-          <property name="calendarPopup">
-           <bool>true</bool>
-          </property>
-          <property name="timeSpec">
-           <enum>Qt::TimeZone</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="3">
-         <widget class="QPushButton" name="export_pdf_button">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Candara</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
+QPushButton:hover:!pressed
+{
+  border: 2px solid rgb(41, 135, 140);
+background-color:rgb(199, 248, 255);
+color:black;
+}</string>
+            </property>
+            <property name="text">
+             <string>Preview Report</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="3">
+           <widget class="QPushButton" name="export_pdf_button">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Candara</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
 background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0547264 rgba(10, 103, 95, 209), stop:1 rgba(13, 136, 125, 209));
 width:170%;
 height:40%;
@@ -1679,50 +1637,52 @@ QPushButton:hover:!pressed
 background-color:rgb(199, 248, 255);
 color:black;
 }</string>
-          </property>
-          <property name="text">
-           <string>Export as PDF Report</string>
-          </property>
-          <property name="flat">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="5">
-         <widget class="QLabel" name="label_8">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Tahoma</family>
-            <pointsize>15</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:rgb(0,0,0,0%);
+            </property>
+            <property name="text">
+             <string>Export as PDF Report</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="3">
+           <widget class="QLabel" name="label_8">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>15</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgba(0,0,0,0%);
 color:rgb(35, 93, 74)</string>
-          </property>
-          <property name="text">
-           <string>Select the period for Report generate</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="margin">
-           <number>10</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
+            </property>
+            <property name="text">
+             <string>Select the period for Report generate</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="margin">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -1743,13 +1703,14 @@ color:rgb(35, 93, 74)</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QMenuBar{background-color:rgb(217, 255, 255);}
+    <string notr="true">QMenuBar{
+background-color:rgb(122, 224, 210);
+}
 
 QMenu:!pressed
 {
-  
-background-color:rgb(139, 234, 255)
-
+	selection-color: rgb(85, 0, 127);
+	background-color:rgb(139, 234, 255);
 }</string>
    </property>
    <widget class="QMenu" name="menuAbout">
@@ -1769,6 +1730,10 @@ background-color:rgb(139, 234, 255)
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAbut_DS_Manager">
+   <property name="icon">
+    <iconset resource="../inc/includes.qrc">
+     <normaloff>:/icons/icon.png</normaloff>:/icons/icon.png</iconset>
+   </property>
    <property name="text">
     <string>Abut DS Manager</string>
    </property>
@@ -1786,8 +1751,6 @@ background-color:rgb(139, 234, 255)
   </action>
  </widget>
  <resources>
-  <include location="../inc/includes.qrc"/>
-  <include location="../inc/includes.qrc"/>
   <include location="../inc/includes.qrc"/>
  </resources>
  <connections/>

@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icon.png</file>
+    <file>icon.ico</file>
+  </qresource>
+  <qresource prefix="images">
+    <file>mosque.jpg</file>
+    <file>new.png</file>
+    <file>background.jpg</file>
+    <file>pakee.png</file>
+    <file>zumair.jpg</file>
+  </qresource>
+</RCC>
