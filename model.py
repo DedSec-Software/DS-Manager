@@ -37,38 +37,31 @@ class Model:
 
         self.conn.commit()
 
-    def bank_update(self, trans_type, date, amount: float):
-
-        # Fetching Data from Tables Start
-
+    def get_bank_last_update(self):
         self.cur.execute("SELECT COUNT(*) FROM BANK")
         count_bank = self.cur.fetchone()[0]
-
-        self.cur.execute("SELECT COUNT(*) FROM CASH;")
-        count_cash = self.cur.fetchone()[0]
-
         self.cur.execute(f"SELECT balance FROM BANK WHERE id={count_bank};")
         bank_balance = self.cur.fetchone()[0]
-
-        self.cur.execute(f"SELECT balance FROM CASH WHERE id={count_cash};")
-        cash_balance = self.cur.fetchone()[0]
-
         self.cur.execute(f"SELECT date FROM BANK WHERE id={count_bank};")
         bank_last_date = self.cur.fetchone()[0]
-
-        self.cur.execute(f"SELECT date FROM CASH WHERE id={count_cash};")
-        cash_last_date = self.cur.fetchone()[0]
-
-        # change fetch str dates to datetime.date obj
-
         year, month, day = bank_last_date.split("-")
         bank_last_date = datetime(int(year), int(month), int(day))
+        return (bank_balance, bank_last_date, count_bank)
 
+    def get_cash_last_update(self):
+        self.cur.execute("SELECT COUNT(*) FROM CASH;")
+        count_cash = self.cur.fetchone()[0]
+        self.cur.execute(f"SELECT balance FROM CASH WHERE id={count_cash};")
+        cash_balance = self.cur.fetchone()[0]
+        self.cur.execute(f"SELECT date FROM CASH WHERE id={count_cash};")
+        cash_last_date = self.cur.fetchone()[0]
         year, month, day = cash_last_date.split("-")
         cash_last_date = datetime(int(year), int(month), int(day))
+        return (cash_balance, cash_last_date, count_cash)
 
-        # Fetching Data from Tables End
-
+    def bank_update(self, trans_type, date, amount: float):
+        bank_balance, bank_last_date, count_bank = self.get_bank_last_update()
+        cash_balance, cash_last_date, count_cash = self.get_cash_last_update()
         if trans_type == "Bank Deposit":
             if cash_balance >= amount:
                 if bank_last_date == date:
