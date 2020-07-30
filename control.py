@@ -4,6 +4,7 @@ from PySide2.QtCore import QDate, Qt
 from PySide2.QtGui import QDoubleValidator
 from dsmanager import Ui_DedSecWindow
 from about import Ui_Dialog
+from model import Model
 
 
 class Control(QMainWindow, Ui_DedSecWindow):
@@ -20,6 +21,8 @@ class Control(QMainWindow, Ui_DedSecWindow):
         self.only_double = QDoubleValidator()
         self.money.setValidator(self.only_double)
         self.set_method()
+        self.model = Model()
+        self.enter_data_button.pressed.connect(self.enter_data)
 
     def set_method(self):
         if self.trans_type.currentText() == "Income" or "Expense":
@@ -112,3 +115,26 @@ class Control(QMainWindow, Ui_DedSecWindow):
         about = Ui_Dialog()
         about.setupUi(dialog)
         dialog.exec_()
+
+    def enter_data(self):
+        if self.trans_type.currentIndex() <= 1:
+            self.model.data_entry(
+                self.trans_type.currentText(),
+                self.method_of_trans.currentText(),
+                self.more_trans_detail.text(),
+                self.date_of_entry.date().toPython(),
+                f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
+                float(self.money.text()),
+            )
+            self.model.update_entry(
+                self.trans_type.currentText(),
+                f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
+                self.date_of_entry.date().toPython(),
+                float(self.money.text()),
+            )
+        else:
+            self.model.bank_update(
+                self.trans_type.currentText(),
+                self.date_of_entry.date().toPython(),
+                float(self.money.text()),
+            )
