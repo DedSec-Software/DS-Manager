@@ -36,6 +36,8 @@ class Model:
 
     def bank_update(self, trans_type, date, amount):
 
+        date = str(date)
+
         #Fetching Data from Tables Start
 
         self.cur.execute("SELECT COUNT(*) FROM BANK")
@@ -44,85 +46,95 @@ class Model:
         self.cur.execute("SELECT COUNT(*) FROM CASH;")
         count_cash = self.cur.fetchone()[0]
 
-        self.cur.execute("SELECT balance FROM BANK WHERE id='count_bank';")
-        balance_bank = self.cur.fetchone()[0]
+        self.cur.execute(f"SELECT balance FROM BANK WHERE id={count_bank};")
+        bank_balance = self.cur.fetchone()[0]
 
-        self.cur.execute("SELECT balance FROM CASH WHERE id='count_cash'")
-        balance_cash = self.cur.fetchone()[0]
+        self.cur.execute(f"SELECT balance FROM CASH WHERE id={count_cash};")
+        cash_balance = self.cur.fetchone()[0]
 
-        self.cur.execute("SELECT date FROM BANK WHERE id='count_bank';")
-        date_bank = self.cur.fetchone()[0]
+        self.cur.execute(f"SELECT date FROM BANK WHERE id={count_bank};")
+        bank_last_date = self.cur.fetchone()[0]
 
-        self.cur.execute("SELECT date FROM CASH WHERE id='count_cash'")
-        date_cash = self.cur.fetchone()[0]
+        self.cur.execute(f"SELECT date FROM CASH WHERE id={count_cash};")
+        cash_last_date = self.cur.fetchone()[0]
+        print(count_bank, " ", count_cash, " ", bank_balance, " ", cash_balance, " ", bank_last_date, " ", cash_last_date)
 
         #Fetching Data from Tables End
 
         if trans_type == "Bank Deposit":
             if cash_balance >= amount:
-                if date_bank == date:
+                if bank_last_date == date:
                     self.cur.execute(
-                        f"UPDATE BANK SET balance=balance + :amount WHERE id='{count_bank}'",
-                        {"date": date, "amount": amount},
+                        f"UPDATE BANK SET balance=balance + :amount WHERE id={count_bank}",
+                        {"amount": amount},
                     )
                     self.conn.commit()
 
                 else:
                     self.cur.execute(
-                        "INSERT INTO BANK VALUES (:id, :date; :amount)",
-                        {"id"=count_bank+1, "date": date, "amount": balance_bank + amount},
+                        "INSERT INTO BANK VALUES (:id, :date, :amount)",
+                        {"id":count_bank + 1, "date": date, "amount": bank_balance + amount},
                     )
                     self.conn.commit()
 
-                if date_cash == date:
+                if cash_last_date == date:
                     self.cur.execute(
-                    f"UPDATE CASH SET balance=balance - :amount WHERE id='{count_cash}'",
-                    {"date": date, "amount": amount},
+                    f"UPDATE CASH SET balance=balance - :amount WHERE id={count_cash}",
+                    {"amount": amount},
                     )
                     self.conn.commit()
 
                 else:
                     self.cur.execute(
-                    "INSERT INTO CASH VALUES (:id, :date; :amount)",
-                    {"id"=count_cash+1, "date": date, "amount": cash_balance - amount},
+                    "INSERT INTO CASH VALUES (:id, :date, :amount)",
+                    {"id": count_cash + 1, "date": date, "amount": cash_balance - amount},
                     )
                     self.conn.commit()
             else:
-                Raise error message here
-                For Your Work :D
+                # Raise error message here
+                # For Your Work :D
+                pass
 
         elif trans_type == "Bank Withdraw":
-            if balance_bank >= amount:
-                if date_bank == date:
+            if bank_balance >= amount:
+                print("print(cash_last_date == date) ",cash_last_date == date)
+                print(type(bank_last_date))
+                print(type(date))
+                if bank_last_date == date:
+                    print("print(cash_last_date == date) ",cash_last_date == date)
                     self.cur.execute(
-                        f"UPDATE BANK SET balance=balance - :amount WHERE id='{count_bank}'",
-                        {"date": date, "amount": amount},
+                        f"UPDATE BANK SET balance=balance - :amount WHERE id={count_bank}",
+                        {"amount": amount},
                     )
                     self.conn.commit()
 
                 else:
+                    print("print(cash_last_date == date) ",cash_last_date == date)
                     self.cur.execute(
-                        "INSERT INTO BANK VALUES (:id, :date; :amount)",
-                        {"id"=count_bank+1, "date": date, "amount": balance_bank - amount},
+                        "INSERT INTO BANK VALUES (:id, :date, :amount)",
+                        {"id":(count_bank+1), "date": date, "amount": (bank_balance - amount)},
                     )
                     self.conn.commit()
 
-                if date_cash == date:
+                if cash_last_date == date:
+                    print("print(cash_last_date == date) ",cash_last_date == date)
                     self.cur.execute(
-                    f"UPDATE CASH SET balance=balance + :amount WHERE id='{count_cash}'",
-                    {"date": date, "amount": amount},
+                    f"UPDATE CASH SET balance=balance + :amount WHERE id={count_cash}",
+                    {"amount": amount},
                     )
                     self.conn.commit()
 
                 else:
+                    print("print(cash_last_date == date) ",cash_last_date == date)
                     self.cur.execute(
-                    "INSERT INTO CASH VALUES (:id, :date; :amount)",
-                    {"id"=count_cash+1, "date": date, "amount": cash_balance + amount}
+                    "INSERT INTO CASH VALUES (:id, :date, :amount)",
+                    {"id":count_cash+1, "date": date, "amount": cash_balance + amount}
                     )
                     self.conn.commit()
             else:
-                Raise error message here
-                For Your Work :D
+                # Raise error message here
+                # For Your Work :D
+                pass
 
     def close_connection(self):
         return self.conn.close()
