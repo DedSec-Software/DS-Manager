@@ -24,6 +24,10 @@ class Control(QMainWindow, Ui_DedSecWindow):
         self.model = Model()
         self.enter_data_button.pressed.connect(self.enter_data)
 
+    def closeEvent(self, event):
+        self.model.close_connection()
+        event.accept()
+
     def set_method(self):
         if self.trans_type.currentText() == "Income" or "Expense":
             self.method_of_trans.show()
