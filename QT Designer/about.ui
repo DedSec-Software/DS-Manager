@@ -25,14 +25,10 @@
   <property name="windowTitle">
    <string>About DS Manager</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="includes.qrc">
-    <normaloff>:/icons/inc/icon.ico</normaloff>:/icons/inc/icon.ico</iconset>
-  </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>-10</x>
      <y>0</y>
      <width>801</width>
      <height>551</height>
@@ -53,17 +49,17 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>10</y>
-      <width>201</width>
-      <height>191</height>
+      <x>70</x>
+      <y>20</y>
+      <width>61</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="includes.qrc">:/icons/inc/icon.ico</pixmap>
+     <pixmap resource="../inc/includes.qrc">:/icons/icon.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -72,16 +68,21 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>50</y>
-      <width>441</width>
+      <x>150</x>
+      <y>40</y>
+      <width>531</width>
       <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.926136, stop:0.0199005 rgba(70, 14, 184, 255), stop:0.965174 rgba(14, 18, 117, 255))</string>
     </property>
     <property name="text">
      <string>DedSec Manager - Copyright © 2020</string>
@@ -98,8 +99,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Tahoma</family>
       <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
@@ -109,9 +112,9 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>100</y>
-      <width>201</width>
+      <x>280</x>
+      <y>90</y>
+      <width>231</width>
       <height>31</height>
      </rect>
     </property>
@@ -124,7 +127,12 @@
     <property name="font">
      <font>
       <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.932, stop:0.308458 rgba(114, 80, 184, 255), stop:0.965174 rgba(31, 88, 255, 211))</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -148,7 +156,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>170</x>
       <y>140</y>
       <width>91</width>
       <height>91</height>
@@ -169,7 +177,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="includes.qrc">:/images/inc/zumair.jpg</pixmap>
+     <pixmap resource="../inc/includes.qrc">:/icons/z2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -186,8 +194,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Tahoma</family>
       <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
@@ -203,6 +213,25 @@
       <height>32</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Candara</family>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+background-color:qlineargradient(spread:pad, x1:0.532552, y1:0, x2:0.522, y2:0.932, stop:0 rgba(128, 101, 184, 255), stop:0.487562 rgba(131, 101, 220, 233), stop:0.965174 rgba(77, 123, 255, 211));
+width:110%;
+height:40%;
+color:white;
+border-radius:8px;
+
+font-size:10;
+</string>
+    </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
@@ -213,7 +242,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>170</x>
       <y>250</y>
       <width>91</width>
       <height>91</height>
@@ -228,7 +257,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>inc/pakee.png</pixmap>
+     <pixmap resource="../inc/includes.qrc">:/icons/pakee.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -245,19 +274,21 @@
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Tahoma</family>
       <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>Himasha gunasena - UI/UX Designer</string>
+     <string>Himasha Gunasena - UI/UX Designer</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>370</y>
+      <x>170</x>
+      <y>360</y>
       <width>91</width>
       <height>91</height>
      </rect>
@@ -271,7 +302,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="includes.qrc">:/images/inc/panchali.png</pixmap>
+     <pixmap resource="../inc/includes.qrc">:/icons/new.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -280,7 +311,8 @@
   </widget>
  </widget>
  <resources>
-  <include location="includes.qrc"/>
+  <include location="../inc/includes.qrc"/>
+  <include location="../inc/includes.qrc"/>
  </resources>
  <connections>
   <connection>
