@@ -130,21 +130,21 @@ class Control(QMainWindow, Ui_DedSecWindow):
                     self.trans_type.currentText(),
                     self.method_of_trans.currentText(),
                     self.more_trans_detail.text(),
-                    self.date_of_entry.date().toPython(),
+                    self.date_of_entry.date().toJulianDay(),
                     f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
                     float(self.money.text()),
                 )
                 self.model.update_entry(
                     self.trans_type.currentText(),
                     f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
-                    self.date_of_entry.date().toPython(),
+                    self.date_of_entry.date().toJulianDay(),
                     float(self.money.text()),
                 )
             else:
                 try:
                     self.model.bank_update(
                         self.trans_type.currentText(),
-                        self.date_of_entry.date().toPython(),
+                        self.date_of_entry.date().toJulianDay(),
                         float(self.money.text()),
                     )
                 except NotEnoughMoney as e:

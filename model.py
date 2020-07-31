@@ -26,13 +26,13 @@ class Model:
     def update_entry(self, trans_type, money_type, date, amount: float):
         if money_type == "Bank":
             self.cur.execute(
-                f"UPDATE BANK SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date = julianday(':date') WHERE id='1'",
+                f"UPDATE BANK SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date = :date WHERE id='1'",
                 {"date": date, "amount": amount},
             )
 
         elif money_type == "Cash":
             self.cur.execute(
-                f"UPDATE CASH SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date= julianday(':date') WHERE id='1'",
+                f"UPDATE CASH SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date= :date WHERE id='1'",
                 {"date": date, "amount": amount},
             )
 
@@ -43,10 +43,8 @@ class Model:
         count_bank = self.cur.fetchone()[0]
         self.cur.execute(f"SELECT balance FROM BANK WHERE id={count_bank};")
         bank_balance = self.cur.fetchone()[0]
-        self.cur.execute(f"SELECT date(date) FROM BANK WHERE id={count_bank};")
+        self.cur.execute(f"SELECT date FROM BANK WHERE id={count_bank};")
         bank_last_date = self.cur.fetchone()[0]
-        year, month, day = bank_last_date.split("-")
-        bank_last_date = datetime(int(year), int(month), int(day))
         return (bank_balance, bank_last_date, count_bank)
 
     def get_cash_last_update(self):
@@ -54,10 +52,8 @@ class Model:
         count_cash = self.cur.fetchone()[0]
         self.cur.execute(f"SELECT balance FROM CASH WHERE id={count_cash};")
         cash_balance = self.cur.fetchone()[0]
-        self.cur.execute(f"SELECT date(date) FROM CASH WHERE id={count_cash};")
+        self.cur.execute(f"SELECT date FROM CASH WHERE id={count_cash};")
         cash_last_date = self.cur.fetchone()[0]
-        year, month, day = cash_last_date.split("-")
-        cash_last_date = datetime(int(year), int(month), int(day))
         return (cash_balance, cash_last_date, count_cash)
 
     def bank_update(self, trans_type, date, amount: float):
@@ -74,7 +70,7 @@ class Model:
 
                 else:
                     self.cur.execute(
-                        "INSERT INTO BANK VALUES (:id, julianday(':date'), :amount)",
+                        "INSERT INTO BANK VALUES (:id, :date, :amount)",
                         {
                             "id": count_bank + 1,
                             "date": date,
@@ -114,7 +110,7 @@ class Model:
 
                 else:
                     self.cur.execute(
-                        "INSERT INTO BANK VALUES (:id, julianday(':date'), :amount)",
+                        "INSERT INTO BANK VALUES (:id, :date, :amount)",
                         {
                             "id": (count_bank + 1),
                             "date": date,
@@ -132,7 +128,7 @@ class Model:
 
                 else:
                     self.cur.execute(
-                        "INSERT INTO CASH VALUES (:id, julianday(':date'), :amount)",
+                        "INSERT INTO CASH VALUES (:id, :date, :amount)",
                         {
                             "id": count_cash + 1,
                             "date": date,
