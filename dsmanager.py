@@ -1122,3 +1122,16 @@ class Ui_DedSecWindow(object):
         )
 
     # retranslateUi
+
+    def show_message(self, message: str, logo: str):
+        msg = QMessageBox()
+        icon = QIcon()
+        icon.addFile(u"inc/icon.ico", QSize(), QIcon.Normal, QIcon.Off)
+        msg.setWindowIcon(icon)
+        if logo == "error":
+            msg.setIcon(QMessageBox.Critical)
+        elif logo == "info":
+            msg.setIcon(QMessageBox.Information)
+        msg.setText(message)
+        msg.setWindowTitle(logo)
+        msg.exec_()

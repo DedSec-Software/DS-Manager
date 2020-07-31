@@ -121,24 +121,41 @@ class Control(QMainWindow, Ui_DedSecWindow):
         dialog.exec_()
 
     def enter_data(self):
+        if self.verify_inputs():
+            if self.trans_type.currentIndex() <= 1:
+                self.model.data_entry(
+                    self.trans_type.currentText(),
+                    self.method_of_trans.currentText(),
+                    self.more_trans_detail.text(),
+                    self.date_of_entry.date().toPython(),
+                    f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
+                    float(self.money.text()),
+                )
+                self.model.update_entry(
+                    self.trans_type.currentText(),
+                    f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
+                    self.date_of_entry.date().toPython(),
+                    float(self.money.text()),
+                )
+            else:
+                    self.model.bank_update(
+                        self.trans_type.currentText(),
+                        self.date_of_entry.date().toPython(),
+                        float(self.money.text()),
+                    )
+
+    def verify_inputs(self):
         if self.trans_type.currentIndex() <= 1:
-            self.model.data_entry(
-                self.trans_type.currentText(),
-                self.method_of_trans.currentText(),
-                self.more_trans_detail.text(),
-                self.date_of_entry.date().toPython(),
-                f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
-                float(self.money.text()),
-            )
-            self.model.update_entry(
-                self.trans_type.currentText(),
-                f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
-                self.date_of_entry.date().toPython(),
-                float(self.money.text()),
-            )
+            if self.radioButton.isChecked() or self.radioButton_2.isChecked():
+                if self.money.text() != "":
+                    return True
+                else:
+                    self.show_message("Please Enter money", "error")
+            else:
+                self.show_message("select money Source", "error")
         else:
-            self.model.bank_update(
-                self.trans_type.currentText(),
-                self.date_of_entry.date().toPython(),
-                float(self.money.text()),
-            )
+            if self.money.text() != "":
+                return True
+            else:
+                self.show_message("Please Enter money", "error")
+        return False
