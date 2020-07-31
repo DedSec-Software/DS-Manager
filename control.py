@@ -1,10 +1,11 @@
 #  Copyright (c) 2020. Mohamed Zumair <mhdzumair@gmail.com>
-from PySide2.QtWidgets import QMainWindow, QCompleter, QDialog
+from PySide2.QtWidgets import QMainWindow, QCompleter, QDialog, QFileDialog
 from PySide2.QtCore import QDate, Qt
 from PySide2.QtGui import QDoubleValidator
 from dsmanager import Ui_DedSecWindow
 from about import Ui_Dialog
 from model import Model
+from shutil import copy2
 
 
 class Control(QMainWindow, Ui_DedSecWindow):
@@ -23,6 +24,7 @@ class Control(QMainWindow, Ui_DedSecWindow):
         self.set_method()
         self.model = Model()
         self.enter_data_button.pressed.connect(self.enter_data)
+        self.actionBackup_Database.triggered.connect(self.take_backup)
 
     def closeEvent(self, event):
         self.model.close_connection()
@@ -143,6 +145,19 @@ class Control(QMainWindow, Ui_DedSecWindow):
                         self.date_of_entry.date().toPython(),
                         float(self.money.text()),
                     )
+
+    def take_backup(self):
+        file = QFileDialog.getSaveFileName(
+            self,
+            "Select DB Backup Folder",
+            f"accounts_backup_{QDate.currentDate().toPython()}",
+            "Database (*.db)",
+        )
+        if file:
+            try:
+                copy2("account.db", file[0])
+            except FileNotFoundError:
+                pass
 
     def verify_inputs(self):
         if self.trans_type.currentIndex() <= 1:
