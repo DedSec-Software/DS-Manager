@@ -1,5 +1,6 @@
 from sqlite3 import connect
 from datetime import date as datetime
+from ds_exception import NotEnoughMoney
 
 
 class Model:
@@ -100,9 +101,7 @@ class Model:
                     )
                     self.conn.commit()
             else:
-                # Raise error message here
-                # For Your Work :D
-                pass
+                raise NotEnoughMoney("Not Enough money in cash balance")
 
         elif trans_type == "Bank Withdraw":
             if bank_balance >= amount:
@@ -142,9 +141,7 @@ class Model:
                     )
                     self.conn.commit()
             else:
-                # Raise error message here
-                # For Your Work :D
-                pass
+                raise NotEnoughMoney("Not Enough money in main bank account")
 
     def close_connection(self):
         return self.conn.close()

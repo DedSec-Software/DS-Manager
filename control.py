@@ -6,6 +6,7 @@ from dsmanager import Ui_DedSecWindow
 from about import Ui_Dialog
 from model import Model
 from shutil import copy2
+from ds_exception import NotEnoughMoney
 
 
 class Control(QMainWindow, Ui_DedSecWindow):
@@ -140,11 +141,14 @@ class Control(QMainWindow, Ui_DedSecWindow):
                     float(self.money.text()),
                 )
             else:
+                try:
                     self.model.bank_update(
                         self.trans_type.currentText(),
                         self.date_of_entry.date().toPython(),
                         float(self.money.text()),
                     )
+                except NotEnoughMoney as e:
+                    self.show_message(e.message, "error")
 
     def take_backup(self):
         file = QFileDialog.getSaveFileName(
