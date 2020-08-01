@@ -24,19 +24,44 @@ class Model:
         self.conn.commit()
 
     def update_entry(self, trans_type, money_type, date, amount: float):
+        bank_balance, bank_last_date, count_bank = self.get_bank_last_update()
+        cash_balance, cash_last_date, count_cash = self.get_cash_last_update()
         if money_type == "Bank":
-            self.cur.execute(
-                f"UPDATE BANK SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date = :date WHERE id='1'",
-                {"date": date, "amount": amount},
-            )
+            if bank_last_date == date:
+                self.cur.execute(
+                    f"UPDATE BANK SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount WHERE id={count_bank}",
+                    {"amount": amount},
+                )
+                self.conn.commit()
 
-        elif money_type == "Cash":
-            self.cur.execute(
-                f"UPDATE CASH SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date= :date WHERE id='1'",
-                {"date": date, "amount": amount},
-            )
+            else:
+                self.cur.execute(
+                    "INSERT INTO BANK VALUES (:id, :date, :amount)",
+                    {
+                        "id": count_bank + 1,
+                        "date": date,
+                        "amount": bank_balance {'+' if trans_type == 'Income' else '-'} amount,
+                    },
+                )
+                self.conn.commit()
+        else:
+            if cash_last_date == date:
+                self.cur.execute(
+                    f"UPDATE CASH SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount WHERE id={count_cash}",
+                    {"amount": amount},
+                )
+                self.conn.commit()
 
-        self.conn.commit()
+            else:
+                self.cur.execute(
+                    "INSERT INTO CASH VALUES (:id, :date, :amount)",
+                    {
+                        "id": count_cash + 1,
+                        "date": date,
+                        "amount": cash_balance {'+' if trans_type == 'Income' else '-'} amount,
+                    },
+                )
+                self.conn.commit()
 
     def get_bank_last_update(self):
         self.cur.execute("SELECT COUNT(*) FROM BANK")
