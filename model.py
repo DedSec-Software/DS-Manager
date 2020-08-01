@@ -8,11 +8,9 @@ class Model:
         self.conn = connect("account.db")
         self.cur = self.conn.cursor()
 
-    def data_entry(
-        self, trans_type, method_of_trans, description, date, money_type, amount: float
-    ):
+    def data_entry(self, trans_type, method_of_trans, description, date, money_type, amount: float):
         self.cur.execute(
-            f"INSERT INTO {'INCOME' if trans_type == 'Income' else 'EXPENSE'} VALUES (:name,:desc, :date, :money_type, :amount)",
+            f"INSERT INTO {'INCOME' if trans_type == 'Income' else 'EXPENSE'} VALUES (:name, :desc, :date, :money_type, :amount)",
             {
                 "name": method_of_trans,
                 "desc": description,
@@ -24,16 +22,18 @@ class Model:
         self.conn.commit()
 
     def update_entry(self, trans_type, money_type, date, amount: float):
+        bank_balance, bank_last_date, count_bank = self.get_bank_last_update()
+        cash_balance, cash_last_date, count_cash = self.get_cash_last_update()
         if money_type == "Bank":
             self.cur.execute(
-                f"UPDATE BANK SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date = :date WHERE id='1'",
-                {"date": date, "amount": amount},
+                f"INSERT INTO BANK VALUES (:id, :date, :amount)",
+                {"id":count_bank+1, "date": date, "amount": bank_balance {'+' if trans_type == 'Income' else '-'} amount},
             )
 
         elif money_type == "Cash":
             self.cur.execute(
-                f"UPDATE CASH SET balance=balance {'+' if trans_type == 'Income' else '-'} :amount, date= :date WHERE id='1'",
-                {"date": date, "amount": amount},
+                f"INSERT INTO CASH VALUES (:id, :date, :amount)",
+                {"id":count_cash+1, "date": date, "amount": cash_balance {'+' if trans_type == 'Income' else '-'} amount},
             )
 
         self.conn.commit()
