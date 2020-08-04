@@ -36,11 +36,12 @@ class Model:
 
             else:
                 self.cur.execute(
-                    "INSERT INTO BANK VALUES (:id, :date, :amount)",
+                    f"INSERT INTO BANK VALUES (:id, :date, :balance {'+' if trans_type == 'Income' else '-'} :amount)",
                     {
                         "id": count_bank + 1,
                         "date": date,
-                        "amount": bank_balance {'+' if trans_type == 'Income' else '-'} amount,
+                        "balance": bank_balance,
+                        "amount": amount,
                     },
                 )
                 self.conn.commit()
@@ -54,11 +55,12 @@ class Model:
 
             else:
                 self.cur.execute(
-                    "INSERT INTO CASH VALUES (:id, :date, :amount)",
+                    f"INSERT INTO CASH VALUES (:id, :date, :balance {'+' if trans_type == 'Income' else '-'} :amount)",
                     {
                         "id": count_cash + 1,
                         "date": date,
-                        "amount": cash_balance {'+' if trans_type == 'Income' else '-'} amount,
+                        "balance": cash_balance,
+                        "amount": amount,
                     },
                 )
                 self.conn.commit()
