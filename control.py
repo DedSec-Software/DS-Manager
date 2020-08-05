@@ -26,6 +26,7 @@ class Control(QMainWindow, Ui_DedSecWindow):
         self.model = Model()
         self.enter_data_button.pressed.connect(self.enter_data)
         self.actionBackup_Database.triggered.connect(self.take_backup)
+        self.preview_report_button.pressed.connect(self.preview_report)
 
     def closeEvent(self, event):
         self.model.close_connection()
@@ -178,3 +179,17 @@ class Control(QMainWindow, Ui_DedSecWindow):
             else:
                 self.show_message("Please Enter money", "error")
         return False
+
+    def preview_report(self):
+        print(
+            self.model.get_records(
+                self.report_date_from.date().toJulianDay(),
+                self.report_date_to.date().toJulianDay(),
+            )
+        )
+        print(
+            self.model.get_balance(
+                self.report_date_from.date().toJulianDay(),
+                self.report_date_to.date().toJulianDay(),
+            )
+        )
