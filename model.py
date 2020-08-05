@@ -8,9 +8,7 @@ class Model:
         self.conn = connect("account.db")
         self.cur = self.conn.cursor()
 
-    def data_entry(
-        self, trans_type, method_of_trans, description, date, money_type, amount: float
-    ):
+    def data_entry(self, trans_type, method_of_trans, description, date, money_type, amount: float):
         self.cur.execute(
             f"INSERT INTO {'INCOME' if trans_type == 'Income' else 'EXPENSE'} VALUES (:name,:desc, :date, :money_type, :amount)",
             {
@@ -165,6 +163,52 @@ class Model:
                     self.conn.commit()
             else:
                 raise NotEnoughMoney("Not Enough money in main bank account")
+
+
+    def get_records(self, date1, date2):
+        self.cur.execute(
+            f"SELECT * from INCOME WHERE date BETWEEN :startdate AND :enddate ORDER BY date",
+            {
+                "startdate" = date1,
+                "enddate" = date2
+            }
+        )
+        rec_income = self.cur.fetchall()
+
+        self.cur.execute(
+            f"SELECT * from EXPENSE WHERE date BETWEEN :startdate AND :enddate ORDER BY date",
+            {
+                "startdate" = date1,
+                "enddate" = date2
+            }
+        )
+        rec_expense = self.cur.fetchall()
+
+        return(rec_income, rec_expense)
+
+    def get_balance(self, date1, date2):
+        self.cur.execute(
+            f"SELECT * FROM BANK WHERE date BETWEEN :startdate AND :enddate ORDER BY id DESC LIMIT 1",
+            {
+                "startdate" = date1,
+                "enddate" = date2
+            }
+        )
+        final_bank_balance = self.cur.fetchall()
+
+        self.cur.execute(
+            f"SELECT * FROM CASH WHERE date BETWEEN :startdate AND :enddate ORDER BY id DESC LIMIT 1",
+            {
+                "startdate" = date1,
+                "enddate" = date2
+            }
+        )
+        final_cash_balance = self.cur.fetchall()
+
+
+        return(final_bank_balance, final_cash_balance)
+
+
 
     def close_connection(self):
         return self.conn.close()
