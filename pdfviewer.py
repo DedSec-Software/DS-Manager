@@ -65,7 +65,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(
-            QCoreApplication.translate("MainWindow", u"MainWindow", None)
+            QCoreApplication.translate("MainWindow", u"Ds Manager - Pdf viewer", None)
         )
 
     # retranslateUi

@@ -211,7 +211,6 @@ class Control(QMainWindow, Ui_DedSecWindow):
         )
         self.create_pdf(self.pdf_file.name, entries, balance)
         main_window = QMainWindow(self)
-        main_window.setWindowTitle("Ds Manager - Pdf viewer")
         pdfviewer = Ui_MainWindow()
         pdfviewer.setupUi(main_window)
         pdfviewer.set_pdf(self.pdf_file.name)
