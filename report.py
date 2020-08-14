@@ -181,7 +181,7 @@ class AccountReport(BaseDocTemplate):
             table_header = [
                 self.create_text("Transaction Type", bold=True),
                 self.create_text("Source", bold=True),
-                self.create_text("Value", bold=True),
+                self.create_text("Money", bold=True),
             ]
             col_width = [150, 130, 80]
             self.income = self.sorting(self.income)
@@ -192,7 +192,7 @@ class AccountReport(BaseDocTemplate):
                 self.create_text("Detailed", bold=True),
                 self.create_text("Date", bold=True),
                 self.create_text("Source", bold=True),
-                self.create_text("Value", bold=True),
+                self.create_text("Money", bold=True),
             ]
             col_width = [100, 80, 80, 80, 60]
         return table_header, col_width
