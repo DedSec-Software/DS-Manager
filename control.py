@@ -28,6 +28,8 @@ class Control(QMainWindow, Ui_DedSecWindow):
         self.money.setValidator(self.only_double)
         self.set_method()
         self.model = Model()
+        for table in ["BANK", "CASH", "BUILDING"]:
+            self.model.fill_upto_today_balance(table)
         self.enter_data_button.pressed.connect(self.enter_data)
         self.actionBackup_Database.triggered.connect(self.take_backup)
         self.preview_report_button.pressed.connect(self.preview_report)
