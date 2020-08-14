@@ -7,6 +7,10 @@ from about import Ui_Dialog
 from model import Model
 from shutil import copy2
 from ds_exception import NotEnoughMoney
+from report import AccountReport
+from pdfviewer import Ui_MainWindow
+from tempfile import NamedTemporaryFile
+from os import unlink
 
 
 class Control(QMainWindow, Ui_DedSecWindow):
@@ -27,9 +31,12 @@ class Control(QMainWindow, Ui_DedSecWindow):
         self.enter_data_button.pressed.connect(self.enter_data)
         self.actionBackup_Database.triggered.connect(self.take_backup)
         self.preview_report_button.pressed.connect(self.preview_report)
+        self.pdf_file = NamedTemporaryFile(suffix=".pdf", delete=False)
 
     def closeEvent(self, event):
         self.model.close_connection()
+        self.pdf_file.close()
+        unlink(self.pdf_file.name)
         event.accept()
 
     def set_method(self):
@@ -181,15 +188,29 @@ class Control(QMainWindow, Ui_DedSecWindow):
         return False
 
     def preview_report(self):
-        print(
-            self.model.get_records(
-                self.report_date_from.date().toJulianDay(),
-                self.report_date_to.date().toJulianDay(),
-            )
+        entries = self.model.get_records(
+            self.report_date_from.date().toJulianDay(),
+            self.report_date_to.date().toJulianDay(),
         )
-        print(
-            self.model.get_balance(
-                self.report_date_from.date().toJulianDay(),
-                self.report_date_to.date().toJulianDay(),
-            )
+        balance = self.model.get_balance(
+            self.report_date_from.date().toJulianDay(),
+            self.report_date_to.date().toJulianDay(),
         )
+        self.create_pdf(self.pdf_file.name, entries, balance)
+        main_window = QMainWindow(self)
+        main_window.setWindowTitle("Ds Manager - Pdf viewer")
+        pdfviewer = Ui_MainWindow()
+        pdfviewer.setupUi(main_window)
+        pdfviewer.set_pdf(self.pdf_file.name)
+        pdfviewer.show_pdf(main_window)
+
+    def create_pdf(self, pdf_file, entries, balance):
+        return AccountReport(
+            pdf_file,
+            entries,
+            balance,
+            self.report_date_from.date().toPython(),
+            self.report_date_to.date().toPython(),
+            self.comboBox.currentText(),
+        )
+
