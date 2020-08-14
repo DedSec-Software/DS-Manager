@@ -32,6 +32,7 @@ class Control(QMainWindow, Ui_DedSecWindow):
         self.actionBackup_Database.triggered.connect(self.take_backup)
         self.preview_report_button.pressed.connect(self.preview_report)
         self.pdf_file = NamedTemporaryFile(suffix=".pdf", delete=False)
+        self.export_pdf_button.pressed.connect(self.save_pdf)
 
     def closeEvent(self, event):
         self.model.close_connection()
@@ -214,3 +215,20 @@ class Control(QMainWindow, Ui_DedSecWindow):
             self.comboBox.currentText(),
         )
 
+    def save_pdf(self):
+        file = QFileDialog.getSaveFileName(
+            self,
+            "Select PDF Save Folder",
+            f"report_{self.report_date_from.date().toPython()}_from_{self.report_date_to.date().toPython()}",
+            "PDF (*.pdf)",
+        )
+        entries = self.model.get_records(
+            self.report_date_from.date().toJulianDay(),
+            self.report_date_to.date().toJulianDay(),
+        )
+        balance = self.model.get_balance(
+            self.report_date_from.date().toJulianDay(),
+            self.report_date_to.date().toJulianDay(),
+        )
+        if file[0] != "":
+            self.create_pdf(file[0], entries, balance)
