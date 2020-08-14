@@ -39,6 +39,19 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.webView.sizePolicy().hasHeightForWidth())
         self.webView.setSizePolicy(sizePolicy)
         self.webView.setProperty("url", QUrl(u""))
+        self.pdf_js = abspath("inc/pdfjs/web/viewer.html")
+        self.pdf_path = None
+        self.pdf_url = None
+
+        self.settings = QWebEngineSettings.globalSettings()
+        self.settings.setAttribute(
+            QWebEngineSettings.LocalContentCanAccessFileUrls, True
+        )
+        self.settings.setAttribute(
+            QWebEngineSettings.LocalContentCanAccessRemoteUrls, True
+        )
+        self.settings.setAttribute(QWebEngineSettings.LocalStorageEnabled, True)
+        self.settings.setAttribute(QWebEngineSettings.JavascriptEnabled, True)
 
         self.verticalLayout.addWidget(self.webView)
 
@@ -57,3 +70,11 @@ class Ui_MainWindow(object):
 
     # retranslateUi
 
+    def set_pdf(self, pdf_path):
+        self.pdf_path = abspath(pdf_path)
+
+    def show_pdf(self, MainWindow):
+        self.pdf_url = QUrl.fromLocalFile(self.pdf_js)
+        self.pdf_url.setQuery("file=" + self.pdf_path)
+        self.webView.load(self.pdf_url)
+        MainWindow.show()
