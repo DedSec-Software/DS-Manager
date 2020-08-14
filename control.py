@@ -151,6 +151,8 @@ class Control(QMainWindow, Ui_DedSecWindow):
                     source,
                     float(self.money.text()),
                 )
+                self.show_message("Data Inserted Succesfully", "info")
+
             else:
                 try:
                     self.model.bank_update(
@@ -158,6 +160,7 @@ class Control(QMainWindow, Ui_DedSecWindow):
                         self.date_of_entry.date().toJulianDay(),
                         float(self.money.text()),
                     )
+                    self.show_message("Data Inserted Succesfully", "info")
                 except NotEnoughMoney as e:
                     self.show_message(e.message, "error")
 
