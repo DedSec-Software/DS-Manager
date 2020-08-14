@@ -135,18 +135,20 @@ class Control(QMainWindow, Ui_DedSecWindow):
     def enter_data(self):
         if self.verify_inputs():
             if self.trans_type.currentIndex() <= 1:
+
+                if self.method_of_trans.currentText().startswith("Building"):
+                    source = "Building"
+                elif self.radioButton.isChecked():
+                    source = "Bank"
+                else:
+                    source = "Cash"
+
                 self.model.data_entry(
                     self.trans_type.currentText(),
                     self.method_of_trans.currentText(),
                     self.more_trans_detail.text(),
                     self.date_of_entry.date().toJulianDay(),
-                    f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
-                    float(self.money.text()),
-                )
-                self.model.update_entry(
-                    self.trans_type.currentText(),
-                    f"{'Bank' if self.radioButton.isChecked() else 'Cash'}",
-                    self.date_of_entry.date().toJulianDay(),
+                    source,
                     float(self.money.text()),
                 )
             else:
@@ -174,7 +176,11 @@ class Control(QMainWindow, Ui_DedSecWindow):
 
     def verify_inputs(self):
         if self.trans_type.currentIndex() <= 1:
-            if self.radioButton.isChecked() or self.radioButton_2.isChecked():
+            if (
+                self.radioButton.isChecked()
+                or self.radioButton_2.isChecked()
+                or self.method_of_trans.currentText().startswith("Building")
+            ):
                 if self.money.text() != "":
                     return True
                 else:
