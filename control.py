@@ -149,7 +149,7 @@ class Control(QMainWindow, Ui_DedSecWindow):
                     self.trans_type.currentText(),
                     self.method_of_trans.currentText(),
                     self.more_trans_detail.text(),
-                    self.date_of_entry.date().toJulianDay(),
+                    self.date_of_entry.date().toPython(),
                     source,
                     float(self.money.text()),
                 )
@@ -159,7 +159,7 @@ class Control(QMainWindow, Ui_DedSecWindow):
                 try:
                     self.model.bank_update(
                         self.trans_type.currentText(),
-                        self.date_of_entry.date().toJulianDay(),
+                        self.date_of_entry.date().toPython(),
                         float(self.money.text()),
                     )
                     self.show_message("Data Inserted Succesfully", "info")
@@ -201,12 +201,13 @@ class Control(QMainWindow, Ui_DedSecWindow):
 
     def preview_report(self):
         entries = self.model.get_records(
-            self.report_date_from.date().toJulianDay(),
-            self.report_date_to.date().toJulianDay(),
+            self.report_date_from.date().toPython(),
+            self.report_date_to.date().toPython(),
+            self.comboBox.currentText(),
         )
         balance = self.model.get_balance(
-            self.report_date_from.date().toJulianDay(),
-            self.report_date_to.date().toJulianDay(),
+            self.report_date_from.date().toPython(),
+            self.report_date_to.date().toPython(),
         )
         self.create_pdf(self.pdf_file.name, entries, balance)
         main_window = QMainWindow(self)
@@ -234,12 +235,13 @@ class Control(QMainWindow, Ui_DedSecWindow):
             "PDF (*.pdf)",
         )
         entries = self.model.get_records(
-            self.report_date_from.date().toJulianDay(),
-            self.report_date_to.date().toJulianDay(),
+            self.report_date_from.date().toPython(),
+            self.report_date_to.date().toPython(),
+            self.comboBox.currentText(),
         )
         balance = self.model.get_balance(
-            self.report_date_from.date().toJulianDay(),
-            self.report_date_to.date().toJulianDay(),
+            self.report_date_from.date().toPython(),
+            self.report_date_to.date().toPython(),
         )
         if file[0] != "":
             self.create_pdf(file[0], entries, balance)
