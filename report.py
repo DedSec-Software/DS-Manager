@@ -345,13 +345,13 @@ class AccountReport(BaseDocTemplate):
         for entry in entries:
             index = None
             for row in sorted_entries:
-                if entry[0] == row[0] and entry[-2] == row[-2]:
+                if entry[0] == row[0] and entry[1] == row[1]:
                     index = sorted_entries.index(row)
                     break
 
             if index is not None:
-                sorted_entries[index][-1] += entry[-1]
+                sorted_entries[index][2] += entry[2]
             else:
-                sorted_entries.append([entry[0], entry[-2], entry[-1]])
+                sorted_entries.append(list(entry))
 
         return sorted_entries
