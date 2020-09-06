@@ -72,77 +72,48 @@ class AccountReport(BaseDocTemplate):
 
         self.addPageTemplates([page_temp])
 
-        story = []
-        story.append(Indenter(100))
-        story.append(Spacer(1, 5))
+        self.story = []
+        self.story.append(Indenter(100))
+        self.story.append(Spacer(1, 5))
         ptext = (
             f"<para align=right><font size=9>Report Generate at:&nbsp; &nbsp;"
             f"<font bgcolor={colors.cornsilk}>{ctime()}</font></font></para>"
         )
-        story.append(Paragraph(ptext, self.style["Right"]))
-        story.append(Spacer(1, 20))
-        story.append(Indenter(-70))
+        self.story.append(Paragraph(ptext, self.style["Right"]))
+        self.story.append(Spacer(1, 20))
+        self.story.append(Indenter(-70))
 
         ptext = (
             f"<font size=11>Report Generate from &nbsp;&nbsp;<font color='darkblue'>{self.date_from}</font>"
             f"&nbsp;&nbsp; to &nbsp;&nbsp;<font color='darkblue'>{self.date_to}</font></font>"
         )
-        story.append(Paragraph(ptext, self.style["Justify"]))
-        story.append(Spacer(1, 20))
+        self.story.append(Paragraph(ptext, self.style["Justify"]))
+        self.story.append(Spacer(1, 20))
 
         ptext = "<para align=left><font color='#191970' fontsize=12><u>Entries of Income</u></font></para>"
-        story.append(Paragraph(ptext, self.title_style))
-        story.append(Indenter(-30))
-        story.append(Spacer(1, 12))
+        self.story.append(Paragraph(ptext, self.title_style))
+        self.story.append(Indenter(-30))
+        self.story.append(Spacer(1, 12))
 
-        table_header, col_width = self.sorted_format()
+        if self.level == "1":
+            self.report_level_1(self.income)
+        else:
+            self.report_level_2(self.income)
 
-        table_data = [table_header]
-
-        for entry in self.income:
-            table_data.append(entry)
-
-        story.append(
-            Table(
-                table_data,
-                repeatRows=1,
-                colWidths=col_width,
-                style=TableStyle(
-                    [
-                        ("BACKGROUND", (0, 0), (-1, 0), colors.lavender),
-                        ("VALIGN", (0, 0), (-1, 0), "MIDDLE"),
-                    ]
-                ),
-            )
-        )
-
-        story.append(Indenter(30))
-        story.append(Spacer(1, 40))
+        self.story.append(Indenter(30))
+        self.story.append(Spacer(1, 40))
         ptext = "<para align=left><font color='#191970' fontsize=12><u>Entries of Expense</u></font></para>"
-        story.append(Paragraph(ptext, self.title_style))
-        story.append(Indenter(-30))
-        story.append(Spacer(1, 12))
+        self.story.append(Paragraph(ptext, self.title_style))
+        self.story.append(Indenter(-30))
+        self.story.append(Spacer(1, 12))
 
-        table_data = [table_header]
-        for entry in self.expense:
-            table_data.append([entry[0], entry[1], f"(-{entry[2]})"])
+        if self.level == "1":
+            self.report_level_1(self.expense)
+        else:
+            self.report_level_2(self.expense)
 
-        story.append(
-            Table(
-                table_data,
-                repeatRows=1,
-                colWidths=col_width,
-                style=TableStyle(
-                    [
-                        ("BACKGROUND", (0, 0), (-1, 0), colors.lavender),
-                        ("VALIGN", (0, 0), (-1, 0), "MIDDLE"),
-                    ]
-                ),
-            )
-        )
-
-        story.append(Spacer(1, 40))
-        story.append(Indenter(50))
+        self.story.append(Spacer(1, 40))
+        self.story.append(Indenter(50))
 
         data = [
             [
@@ -160,7 +131,7 @@ class AccountReport(BaseDocTemplate):
         ]
 
         col_width = [250, 80]
-        story.append(
+        self.story.append(
             Table(
                 data,
                 colWidths=col_width,
@@ -174,28 +145,57 @@ class AccountReport(BaseDocTemplate):
             )
         )
 
-        self.build(story)
+        self.build(self.story)
 
-    def sorted_format(self):
-        if self.level == "level 1":
-            table_header = [
-                self.create_text("Transaction Type", bold=True),
-                self.create_text("Source", bold=True),
-                self.create_text("Money", bold=True),
-            ]
-            col_width = [150, 130, 80]
-            self.income = self.sorting(self.income)
-            self.expense = self.sorting(self.expense)
-        else:
-            table_header = [
-                self.create_text("Transaction Type", bold=True),
-                self.create_text("Detailed", bold=True),
-                self.create_text("Date", bold=True),
-                self.create_text("Source", bold=True),
-                self.create_text("Money", bold=True),
-            ]
-            col_width = [100, 80, 80, 80, 60]
-        return table_header, col_width
+    def report_level_1(self, entries):
+        table_header = [
+            self.create_text("Transaction Type", bold=True),
+            self.create_text("Source", bold=True),
+            self.create_text("Money", bold=True),
+        ]
+        col_width = [150, 130, 80]
+        table_data = [table_header]
+        for entry in entries:
+            table_data.append(entry)
+        self.create_table(table_data, col_width)
+
+    def report_level_2(self, entries):
+        table_header = [
+            self.create_text("Transaction Type", bold=True),
+            self.create_text("Detailed", bold=True),
+            self.create_text("Date", bold=True),
+            self.create_text("Source", bold=True),
+            self.create_text("Cheque Number", bold=True),
+            self.create_text("Money", bold=True),
+        ]
+        table_data = [table_header]
+        for entry in entries:
+            table_data.append(
+                [
+                    self.create_text(entry[0]),
+                    self.create_text(entry[1]),
+                    self.create_text(entry[2]),
+                    self.create_text(entry[3]),
+                    self.create_text(entry[4]),
+                    self.create_text(entry[5]),
+                ]
+            )
+        self.create_table(table_data)
+
+    def create_table(self, table_data, col_width=None):
+        self.story.append(
+            Table(
+                table_data,
+                repeatRows=1,
+                colWidths=col_width,
+                style=TableStyle(
+                    [
+                        ("BACKGROUND", (0, 0), (-1, 0), colors.lavender),
+                        ("VALIGN", (0, 0), (-1, 0), "MIDDLE"),
+                    ]
+                ),
+            )
+        )
 
     def create_text(self, text, size=9, bold=False):
 
@@ -339,19 +339,3 @@ class AccountReport(BaseDocTemplate):
                 """
         trusty_para = Paragraph(trusty_text, self.trusty_style)
         return trusty_para
-
-    def sorting(self, entries):
-        sorted_entries = []
-        for entry in entries:
-            index = None
-            for row in sorted_entries:
-                if entry[0] == row[0] and entry[1] == row[1]:
-                    index = sorted_entries.index(row)
-                    break
-
-            if index is not None:
-                sorted_entries[index][2] += entry[2]
-            else:
-                sorted_entries.append(list(entry))
-
-        return sorted_entries

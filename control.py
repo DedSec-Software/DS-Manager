@@ -1,60 +1,91 @@
-#  Copyright (c) 2020. Mohamed Zumair <mhdzumair@gmail.com>
-from PySide2.QtWidgets import QMainWindow, QCompleter, QDialog, QFileDialog
+#  Copyright (C) 2020  Mohamed Zumair <mhdzumair@gmail.com>
+#
+#      This program is free software: you can redistribute it and/or modify
+#      it under the terms of the GNU General Public License as published by
+#      the Free Software Foundation, either version 3 of the License, or
+#      (at your option) any later version.
+#
+#      This program is distributed in the hope that it will be useful,
+#      but WITHOUT ANY WARRANTY; without even the implied warranty of
+#      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#      GNU General Public License for more details.
+#
+#      You should have received a copy of the GNU General Public License
+#      along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+from PySide2.QtWidgets import QCompleter, QFileDialog
 from PySide2.QtCore import QDate, Qt
-from PySide2.QtGui import QDoubleValidator
-from dsmanager import Ui_DedSecWindow
-from about import Ui_Dialog
+from PySide2.QtGui import QDoubleValidator, QPainter
+from PySide2.QtPrintSupport import QPrintDialog, QPrinter
+from PySide2.QtWebEngineWidgets import QWebEngineSettings
 from model import Model
 from shutil import copy2
 from ds_exception import NotEnoughMoney
 from report import AccountReport
-from pdfviewer import Ui_MainWindow
-from tempfile import NamedTemporaryFile
-from os import unlink
+from tempfile import TemporaryDirectory
+from PIL.ImageQt import ImageQt
+from pdf2image import convert_from_path
+from view import View
+from threading import Thread
 
 
-class Control(QMainWindow, Ui_DedSecWindow):
-    def __init__(self, *args, **kwargs):
-        super(Control, self).__init__(*args, **kwargs)
-        self.setupUi(self)
-        self.date_of_entry.setDate(QDate.currentDate())
-        self.report_date_from.setDate(QDate.currentDate())
-        self.report_date_to.setDate(QDate.currentDate())
-        self.trans_type.currentTextChanged.connect(self.set_method)
-        self.method_of_trans.currentTextChanged.connect(self.more_trans_complete)
-        self.clear_entry_button.pressed.connect(self.clear_entries)
-        self.actionAbut_DS_Manager.triggered.connect(self.show_about_ds)
-        self.only_double = QDoubleValidator()
-        self.money.setValidator(self.only_double)
-        self.set_method()
+class Control:
+    def __init__(self):
+        self.view = View()
         self.model = Model()
+        self.only_double = QDoubleValidator()
+        self.today = QDate.currentDate()
+        self.source_table = None
+        self.last_reverse_entry_btn = None  # for uncheck reversed entry button group
+        self.settings = QWebEngineSettings.globalSettings()
+        Thread(target=self.fil_upto_today, daemon=True).start()
+        self.set_events()
+        self.set_method_of_trans()
+
+    def set_events(self):
+        self.view.date_of_entry.setDate(self.today)
+        self.view.report_date_from.setDate(self.today)
+        self.view.report_date_to.setDate(self.today)
+        self.view.trans_type.currentTextChanged.connect(self.set_method_of_trans)
+        self.view.method_of_trans.currentTextChanged.connect(self.more_trans_complete)
+        self.view.clear_entry_button.pressed.connect(self.clear_entries)
+        self.view.actionAbut_DS_Manager.triggered.connect(View.show_about_ds)
+        self.view.money.setValidator(self.only_double)
+        self.view.enter_data_button.pressed.connect(self.enter_data)
+        self.view.actionBackup_Database.triggered.connect(self.take_backup)
+        self.view.preview_report_button.pressed.connect(self.preview_report)
+        self.view.export_pdf_button.pressed.connect(self.save_pdf)
+        self.view.reversed_entry_btn_group.buttonClicked.connect(self.set_reverse_entry)
+        self.view.source_btn_group.buttonClicked.connect(self.set_source_table)
+        self.view.print_report_button.pressed.connect(self.print_report)
+        self.settings.setAttribute(
+            QWebEngineSettings.LocalContentCanAccessFileUrls, True
+        )
+        self.settings.setAttribute(
+            QWebEngineSettings.LocalContentCanAccessRemoteUrls, True
+        )
+        self.settings.setAttribute(QWebEngineSettings.LocalStorageEnabled, True)
+        self.settings.setAttribute(QWebEngineSettings.JavascriptEnabled, True)
+        self.view.actionRestore_Database.triggered.connect(self.restore_db)
+
+    def show(self):
+        self.view.show()
+
+    def fil_upto_today(self):
         for table in ["BANK", "CASH", "BUILDING"]:
-            self.model.fill_upto_today_balance(table)
-        self.enter_data_button.pressed.connect(self.enter_data)
-        self.actionBackup_Database.triggered.connect(self.take_backup)
-        self.preview_report_button.pressed.connect(self.preview_report)
-        self.pdf_file = NamedTemporaryFile(suffix=".pdf", delete=False)
-        self.export_pdf_button.pressed.connect(self.save_pdf)
+            Model.fill_upto_today_balance(table)
 
-    def closeEvent(self, event):
-        self.model.close_connection()
-        self.pdf_file.close()
-        unlink(self.pdf_file.name)
-        event.accept()
+    def set_method_of_trans(self):
+        if self.view.trans_type.currentIndex() <= 1:
+            self.view.method_of_trans.show()
+            self.view.label_3.show()
+            self.view.label_9.show()
+            self.view.more_trans_detail.show()
+            self.view.cash_radio.show()
 
-    def set_method(self):
-        if self.trans_type.currentText() == "Income" or "Expense":
-            self.method_of_trans.show()
-            self.label_3.show()
-            self.label_9.show()
-            self.more_trans_detail.show()
-            self.label_10.show()
-            self.radioButton.show()
-            self.radioButton_2.show()
-
-        if self.trans_type.currentText() == "Income":
-            self.method_of_trans.clear()
-            self.method_of_trans.insertItems(
+        if self.view.trans_type.currentIndex() == 0:
+            self.view.method_of_trans.clear()
+            self.view.method_of_trans.insertItems(
                 0,
                 [
                     "Shantha Money",
@@ -65,9 +96,9 @@ class Control(QMainWindow, Ui_DedSecWindow):
                     "Others",
                 ],
             )
-        elif self.trans_type.currentText() == "Expense":
-            self.method_of_trans.clear()
-            self.method_of_trans.insertItems(
+        elif self.view.trans_type.currentIndex() == 1:
+            self.view.method_of_trans.clear()
+            self.view.method_of_trans.insertItems(
                 0,
                 [
                     "Salary",
@@ -77,28 +108,21 @@ class Control(QMainWindow, Ui_DedSecWindow):
                     "Jumma Expenses",
                     "Building Expenses",
                     "Maintenance",
+                    "Others",
                 ],
             )
+
         else:
-            self.method_of_trans.hide()
-            self.label_3.hide()
-            self.label_9.hide()
-            self.more_trans_detail.hide()
-            self.label_10.hide()
-            self.radioButton.hide()
-            self.radioButton_2.hide()
+            self.view.method_of_trans.hide()
+            self.view.label_3.hide()
+            self.view.label_9.hide()
+            self.view.more_trans_detail.hide()
+            self.view.cash_radio.hide()
+            self.view.cheque_number.hide()
+            self.view.cheque_label.hide()
 
     def more_trans_complete(self):
-        curr_text = self.method_of_trans.currentText()
-        if curr_text == "Building Expenses" or curr_text == "Building Fund Collection":
-            self.label_10.hide()
-            self.radioButton.hide()
-            self.radioButton_2.hide()
-        else:
-            self.label_10.show()
-            self.radioButton.show()
-            self.radioButton_2.show()
-
+        curr_text = self.view.method_of_trans.currentText()
         helping = []
         if curr_text == "Salary":
             for value in (
@@ -120,127 +144,248 @@ class Control(QMainWindow, Ui_DedSecWindow):
 
         completer = QCompleter(helping)
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
-        self.more_trans_detail.setCompleter(completer)
+        self.view.more_trans_detail.setCompleter(completer)
 
     def clear_entries(self):
-        self.trans_type.setCurrentIndex(0)
-        self.more_trans_detail.clear()
-        self.money.clear()
-        self.date_of_entry.setDate(QDate.currentDate())
-
-    def show_about_ds(self):
-        dialog = QDialog()
-        about = Ui_Dialog()
-        about.setupUi(dialog)
-        dialog.exec_()
+        self.view.trans_type.setCurrentIndex(0)
+        self.view.more_trans_detail.clear()
+        self.view.cheque_number.clear()
+        self.view.money.clear()
+        self.view.date_of_entry.setDate(self.today)
+        self.view.cheque_label.hide()
+        self.view.cheque_number.hide()
+        self.view.cheque_number.clear
+        self.view.source_btn_group.setExclusive(False)
+        self.view.reversed_entry_btn_group.setExclusive(False)
+        self.last_reverse_entry_btn = None
+        self.source_table = None
+        try:
+            self.view.source_btn_group.checkedButton().setChecked(False)
+        except AttributeError:
+            pass
+        try:
+            self.view.reversed_entry_btn_group.checkedButton().setChecked(False)
+        except AttributeError:
+            pass
+        self.view.reversed_entry_btn_group.setExclusive(True)
+        self.view.source_btn_group.setExclusive(True)
 
     def enter_data(self):
-        if self.verify_inputs():
-            if self.trans_type.currentIndex() <= 1:
-
-                if self.method_of_trans.currentText().startswith("Building"):
-                    source = "Building"
-                elif self.radioButton.isChecked():
-                    source = "Bank"
-                else:
-                    source = "Cash"
+        if not self.verify_inputs():
+            return
+        try:
+            if self.view.trans_type.currentIndex() <= 1:
 
                 self.model.data_entry(
-                    self.trans_type.currentText(),
-                    self.method_of_trans.currentText(),
-                    self.more_trans_detail.text(),
-                    self.date_of_entry.date().toPython(),
-                    source,
-                    float(self.money.text()),
+                    self.view.trans_type.currentText(),
+                    self.view.method_of_trans.currentText(),
+                    self.view.more_trans_detail.text(),
+                    self.view.date_of_entry.date().toPython(),
+                    self.source_table,
+                    self.view.cheque_number.text(),
+                    float(self.view.money.text()),
                 )
-                self.show_message("Data Inserted Succesfully", "info")
 
             else:
-                try:
-                    self.model.bank_update(
-                        self.trans_type.currentText(),
-                        self.date_of_entry.date().toPython(),
-                        float(self.money.text()),
-                    )
-                    self.show_message("Data Inserted Succesfully", "info")
-                except NotEnoughMoney as e:
-                    self.show_message(e.message, "error")
+                self.model.bank_update(
+                    self.view.trans_type.currentText(),
+                    self.view.date_of_entry.date().toPython(),
+                    float(self.view.money.text()),
+                    self.source_table,
+                )
+
+            View.show_message("Data Inserted Succesfully", "info")
+        except NotEnoughMoney as e:
+            View.show_message(e.message, "error")
 
     def take_backup(self):
-        file = QFileDialog.getSaveFileName(
-            self,
+        file, _ = QFileDialog.getSaveFileName(
+            self.view,
             "Select DB Backup Folder",
-            f"accounts_backup_{QDate.currentDate().toPython()}",
+            f"accounts_backup_{self.today.toPython()}",
             "Database (*.db)",
         )
-        if file:
-            try:
-                copy2("account.db", file[0])
-            except FileNotFoundError:
-                pass
+        if file != "":
+            copy2("account.db", file)
+            View.show_message("Succesfully Backuped Database", "info")
 
     def verify_inputs(self):
-        if self.trans_type.currentIndex() <= 1:
-            if (
-                self.radioButton.isChecked()
-                or self.radioButton_2.isChecked()
-                or self.method_of_trans.currentText().startswith("Building")
-            ):
-                if self.money.text() != "":
+        if (
+            self.view.date_of_entry.date().toJulianDay()
+            > QDate.currentDate().toJulianDay()
+        ):
+            View.show_message("Selected date should not exceed today date", "error")
+            return False
+        if self.view.trans_type.currentIndex() <= 1:
+            if self.view.money.text() != "":
+                if self.source_table == "CASH":
+                    return True
+                elif self.view.source_btn_group.checkedId() > 1:
+                    if self.view.cheque_number.text() != "":
+                        return True
+                    View.show_message("Enter Cheque Number", "error")
+                else:
+                    View.show_message("Select money Source", "error")
+            else:
+                View.show_message("Please Enter money", "error")
+        else:
+            if self.source_table is not None:
+                if self.view.money.text() != "":
                     return True
                 else:
-                    self.show_message("Please Enter money", "error")
+                    View.show_message("Please Enter money", "error")
             else:
-                self.show_message("select money Source", "error")
-        else:
-            if self.money.text() != "":
-                return True
-            else:
-                self.show_message("Please Enter money", "error")
+                View.show_message("Select money Source", "error")
         return False
 
     def preview_report(self):
+        if not self.validate_report_dates():
+            return
+
         entries = self.model.get_records(
-            self.report_date_from.date().toPython(),
-            self.report_date_to.date().toPython(),
-            self.comboBox.currentText(),
+            self.view.report_date_from.date().toPython(),
+            self.view.report_date_to.date().toPython(),
+            self.view.comboBox.currentText(),
         )
         balance = self.model.get_balance(
-            self.report_date_from.date().toPython(),
-            self.report_date_to.date().toPython(),
+            self.view.report_date_from.date().toPython(),
+            self.view.report_date_to.date().toPython(),
         )
-        self.create_pdf(self.pdf_file.name, entries, balance)
-        main_window = QMainWindow(self)
-        pdfviewer = Ui_MainWindow()
-        pdfviewer.setupUi(main_window)
-        pdfviewer.set_pdf(self.pdf_file.name)
-        pdfviewer.show_pdf(main_window)
+        if self.create_pdf(self.model.pdf_file.name, entries, balance):
+            self.view.view_pdf(self.model.pdf_js, self.model.pdf_file.name)
 
     def create_pdf(self, pdf_file, entries, balance):
-        return AccountReport(
-            pdf_file,
-            entries,
-            balance,
-            self.report_date_from.date().toPython(),
-            self.report_date_to.date().toPython(),
-            self.comboBox.currentText(),
-        )
+        try:
+            AccountReport(
+                pdf_file,
+                entries,
+                balance,
+                self.view.report_date_from.date().toPython(),
+                self.view.report_date_to.date().toPython(),
+                self.view.comboBox.currentText(),
+            )
+            return True
+        except TypeError:
+            View.show_message(
+                "Invalid Dates\nNo Entries Available within the period", "error"
+            )
+            return False
 
     def save_pdf(self):
-        file = QFileDialog.getSaveFileName(
-            self,
-            "Select PDF Save Folder",
-            f"report_{self.report_date_from.date().toPython()}_from_{self.report_date_to.date().toPython()}",
-            "PDF (*.pdf)",
-        )
+        if self.validate_report_dates():
+            file, _ = QFileDialog.getSaveFileName(
+                self.view,
+                "Select PDF Save Folder",
+                f"report_{self.view.report_date_from.date().toPython()}_from_{self.view.report_date_to.date().toPython()}",
+                "PDF (*.pdf)",
+            )
+            if file != "":
+                entries = self.model.get_records(
+                    self.view.report_date_from.date().toPython(),
+                    self.view.report_date_to.date().toPython(),
+                    self.view.comboBox.currentText(),
+                )
+                balance = self.model.get_balance(
+                    self.view.report_date_from.date().toPython(),
+                    self.view.report_date_to.date().toPython(),
+                )
+                self.create_pdf(file, entries, balance)
+
+    def set_reverse_entry(self, checkbox):
+        if self.last_reverse_entry_btn == checkbox.text():
+            self.view.reversed_entry_btn_group.setExclusive(False)
+            checkbox.setChecked(False)
+            self.view.reversed_entry_btn_group.setExclusive(True)
+            self.last_reverse_entry_btn = None
+            self.view.more_trans_detail.clear()
+            if "-" in self.view.money.text():
+                self.view.money.setText(str(self.view.money.text()).lstrip("-"))
+            return
+
+        self.last_reverse_entry_btn = checkbox.text()
+
+        if checkbox.text() == "Decrease":
+            if not "-" in self.view.money.text():
+                self.view.money.setText(f"-{self.view.money.text()}")
+            self.view.more_trans_detail.setText("Reverse Entry")
+        elif checkbox.text() == "Increase":
+            self.view.more_trans_detail.setText("Reverse Entry")
+            if "-" in self.view.money.text():
+                self.view.money.setText(str(self.view.money.text()).lstrip("-"))
+
+    def validate_report_dates(self):
+        if (
+            self.view.report_date_from.date().toJulianDay()
+            or self.view.report_date_to.date().toJulianDay()
+        ) > self.today.toJulianDay():
+            View.show_message("Selected date should not exceed today date", "error")
+            return False
+        if (
+            self.view.report_date_to.date().toJulianDay()
+            - self.view.report_date_from.date().toJulianDay()
+            < 0
+        ):
+            View.show_message("Deference between dates shoud be positive", "error")
+            return False
+        return True
+
+    def print_report(self):
+        if not self.validate_report_dates():
+            return
+
         entries = self.model.get_records(
-            self.report_date_from.date().toPython(),
-            self.report_date_to.date().toPython(),
-            self.comboBox.currentText(),
+            self.view.report_date_from.date().toPython(),
+            self.view.report_date_to.date().toPython(),
+            self.view.comboBox.currentText(),
         )
         balance = self.model.get_balance(
-            self.report_date_from.date().toPython(),
-            self.report_date_to.date().toPython(),
+            self.view.report_date_from.date().toPython(),
+            self.view.report_date_to.date().toPython(),
         )
-        if file[0] != "":
-            self.create_pdf(file[0], entries, balance)
+        if not self.create_pdf(self.model.pdf_file.name, entries, balance):
+            return
+
+        printer = QPrinter(QPrinter.HighResolution)
+        dialog = QPrintDialog(printer, self)
+        if dialog.exec_() != QPrintDialog.Accepted:
+            return
+
+        with TemporaryDirectory() as path:
+            images = convert_from_path(
+                self.model.pdf_file.name, dpi=300, output_folder=path
+            )
+            painter = QPainter()
+            painter.begin(printer)
+            for i, image in enumerate(images):
+                if i > 0:
+                    printer.newPage()
+                rect = painter.viewport()
+                qtImage = ImageQt(image)
+                qtImageScaled = qtImage.scaled(
+                    rect.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation
+                )
+                painter.drawImage(rect, qtImageScaled)
+            painter.end()
+
+    def set_source_table(self, radio_button):
+        if radio_button.text() == "Cash":
+            self.source_table = "CASH"
+            self.view.cheque_number.clear()
+            self.view.cheque_number.hide()
+            self.view.cheque_label.hide()
+            return
+        elif radio_button.text() == "Main Account":
+            self.source_table = "BANK"
+        elif radio_button.text() == "Building Account":
+            self.source_table = "BUILDING"
+        if self.view.trans_type.currentIndex() < 2:
+            self.view.cheque_label.show()
+            self.view.cheque_number.show()
+
+    def restore_db(self):
+        file, _ = QFileDialog.getOpenFileName(
+            self.view, "Select Database File", "", "Database (*.db)",
+        )
+        if file != "":
+            copy2(file, "account.db")
+            View.show_message("Succesfully Restored Database", "info")
