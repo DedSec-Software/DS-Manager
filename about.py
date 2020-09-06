@@ -24,18 +24,18 @@ from PySide2.QtWidgets import *
 import includes_rc
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        if not Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
-        Dialog.resize(767, 537)
+class Ui_About(object):
+    def setupUi(self, About):
+        if not About.objectName():
+            About.setObjectName(u"About")
+        About.resize(767, 537)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
-        Dialog.setSizePolicy(sizePolicy)
-        Dialog.setMaximumSize(QSize(767, 537))
-        self.frame = QFrame(Dialog)
+        sizePolicy.setHeightForWidth(About.sizePolicy().hasHeightForWidth())
+        About.setSizePolicy(sizePolicy)
+        About.setMaximumSize(QSize(767, 537))
+        self.frame = QFrame(About)
         self.frame.setObjectName(u"frame")
         self.frame.setGeometry(QRect(-20, -10, 800, 641))
         self.frame.setMaximumSize(QSize(800, 650))
@@ -137,42 +137,40 @@ class Ui_Dialog(object):
         self.label_9.setPixmap(QPixmap(u":/images/new.png"))
         self.label_9.setScaledContents(True)
 
-        self.retranslateUi(Dialog)
-        self.buttonBox.rejected.connect(Dialog.reject)
-        self.buttonBox.accepted.connect(Dialog.accept)
+        self.retranslateUi(About)
+        self.buttonBox.rejected.connect(About.reject)
+        self.buttonBox.accepted.connect(About.accept)
 
-        QMetaObject.connectSlotsByName(Dialog)
+        QMetaObject.connectSlotsByName(About)
 
     # setupUi
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(
-            QCoreApplication.translate("Dialog", u"About DS Manager", None)
+    def retranslateUi(self, About):
+        About.setWindowTitle(
+            QCoreApplication.translate("About", u"About DS Manager", None)
         )
         self.label.setText("")
         self.label_2.setText(
             QCoreApplication.translate(
-                "Dialog", u"DedSec Manager - Copyright \u00a9 2020", None
+                "About", u"DedSec Manager - Copyright \u00a9 2020", None
             )
         )
         self.label_3.setText(
             QCoreApplication.translate(
-                "Dialog", u"Mohamed Zumair - Core Developer", None
+                "About", u"Mohamed Zumair - Core Developer", None
             )
         )
-        self.label_4.setText(
-            QCoreApplication.translate("Dialog", u"Team Members", None)
-        )
+        self.label_4.setText(QCoreApplication.translate("About", u"Team Members", None))
         self.label_5.setText("")
         self.label_6.setText(
             QCoreApplication.translate(
-                "Dialog", u"Pakeetharan Balasubramaniam - Database Admin", None
+                "About", u"Pakeetharan Balasubramaniam - Database Admin", None
             )
         )
         self.label_7.setText("")
         self.label_8.setText(
             QCoreApplication.translate(
-                "Dialog", u"Himasha Gunasena - UI/UX Designer", None
+                "About", u"Himasha Gunasena - UI/UX Designer", None
             )
         )
         self.label_9.setText("")
