@@ -15,19 +15,18 @@ from PySide2.QtWidgets import QWidget, QVBoxLayout, QSizePolicy
 from PySide2.QtWebEngineWidgets import QWebEngineView as QWebView
 from PySide2.QtWebEngineWidgets import QWebEngineSettings
 
-
 import includes_rc
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        if not MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(820, 652)
+class Ui_PDFViewer(object):
+    def setupUi(self, PDFViewer):
+        if not PDFViewer.objectName():
+            PDFViewer.setObjectName(u"PDFViewer")
+        PDFViewer.resize(820, 652)
         icon = QIcon()
         icon.addFile(u":/icons/icon.ico", QSize(), QIcon.Normal, QIcon.Off)
-        MainWindow.setWindowIcon(icon)
-        self.centralwidget = QWidget(MainWindow)
+        PDFViewer.setWindowIcon(icon)
+        self.centralwidget = QWidget(PDFViewer)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -39,42 +38,20 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.webView.sizePolicy().hasHeightForWidth())
         self.webView.setSizePolicy(sizePolicy)
         self.webView.setProperty("url", QUrl(u""))
-        self.pdf_js = abspath("inc/pdfjs/web/viewer.html")
-        self.pdf_path = None
-        self.pdf_url = None
-
-        self.settings = QWebEngineSettings.globalSettings()
-        self.settings.setAttribute(
-            QWebEngineSettings.LocalContentCanAccessFileUrls, True
-        )
-        self.settings.setAttribute(
-            QWebEngineSettings.LocalContentCanAccessRemoteUrls, True
-        )
-        self.settings.setAttribute(QWebEngineSettings.LocalStorageEnabled, True)
-        self.settings.setAttribute(QWebEngineSettings.JavascriptEnabled, True)
 
         self.verticalLayout.addWidget(self.webView)
 
-        MainWindow.setCentralWidget(self.centralwidget)
+        PDFViewer.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(PDFViewer)
 
-        QMetaObject.connectSlotsByName(MainWindow)
+        QMetaObject.connectSlotsByName(PDFViewer)
 
     # setupUi
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(
-            QCoreApplication.translate("MainWindow", u"Ds Manager - Pdf viewer", None)
+    def retranslateUi(self, PDFViewer):
+        PDFViewer.setWindowTitle(
+            QCoreApplication.translate("PDFViewer", u"MainWindow", None)
         )
 
     # retranslateUi
-
-    def set_pdf(self, pdf_path):
-        self.pdf_path = abspath(pdf_path)
-
-    def show_pdf(self, MainWindow):
-        self.pdf_url = QUrl.fromLocalFile(self.pdf_js)
-        self.pdf_url.setQuery("file=" + self.pdf_path)
-        self.webView.load(self.pdf_url)
-        MainWindow.show()
