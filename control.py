@@ -346,7 +346,7 @@ class Control:
             return
 
         printer = QPrinter(QPrinter.HighResolution)
-        dialog = QPrintDialog(printer, self)
+        dialog = QPrintDialog(printer)
         if dialog.exec_() != QPrintDialog.Accepted:
             return
 
