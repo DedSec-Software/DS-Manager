@@ -154,7 +154,7 @@ class Control:
         self.view.date_of_entry.setDate(self.today)
         self.view.cheque_label.hide()
         self.view.cheque_number.hide()
-        self.view.cheque_number.clear
+        self.view.cheque_number.clear()
         self.view.source_btn_group.setExclusive(False)
         self.view.reversed_entry_btn_group.setExclusive(False)
         self.last_reverse_entry_btn = None
