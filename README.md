@@ -1,7 +1,18 @@
-# DS-Manager
+# DS-Manager ![DS-Manager](inc/home_logo.png)
+
 Simple and powerful application to manage accounts and auto report generate
 
 ---
+### UI Layout
+
+![UI](inc/dsmanager.png)
+
+### Sample PDF Report
+
+![Sample Report](inc/sample_report.jpg)
+
+---
+
 ### Contributors
 * Mohamed Zumair : [mhdzumair](https://github.com/mhdzumair)
 * Pakeetharan Balasupramaniyam : [Pakeetharan](https://github.com/Pakeetharan)
