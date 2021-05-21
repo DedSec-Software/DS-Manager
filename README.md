@@ -1,4 +1,6 @@
-# DS-Manager ![DS-Manager](inc/home_logo.png)
+<p align=center> <img src="inc/home_logo.png" width=250 height=250> </p>
+
+# DS-Manager 
 
 Simple and powerful application to manage accounts and auto report generate
 
