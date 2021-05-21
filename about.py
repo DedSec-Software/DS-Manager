@@ -152,7 +152,7 @@ class Ui_About(object):
         self.label.setText("")
         self.label_2.setText(
             QCoreApplication.translate(
-                "About", u"DedSec Manager - Copyright \u00a9 2020", None
+                "About", u"DedSec Manager - Copyright \u00a9 2020 - 2021", None
             )
         )
         self.label_3.setText(

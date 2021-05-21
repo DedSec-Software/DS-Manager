@@ -1,4 +1,4 @@
-#  Copyright (C) 2020  Mohamed Zumair <mhdzumair@gmail.com>
+#  Copyright (C) 2020 - 2021 Mohamed Zumair <mhdzumair@gmail.com>
 #
 #      This program is free software: you can redistribute it and/or modify
 #      it under the terms of the GNU General Public License as published by
