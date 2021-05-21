@@ -280,6 +280,7 @@ class Control:
                 "PDF (*.pdf)",
             )
             if file != "":
+                file = file if file.endswith(".pdf") else file + ".pdf"
                 entries = self.model.get_records(
                     self.view.report_date_from.date().toPython(),
                     self.view.report_date_to.date().toPython(),
