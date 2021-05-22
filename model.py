@@ -63,15 +63,7 @@ class Model:
         cheque_number,
         amount: float,
     ):
-        print(
-            trans_type,
-            method_of_trans,
-            description,
-            date,
-            source_table,
-            cheque_number,
-            amount,
-        )
+        
         self.cursor.execute(
             f"INSERT INTO {'INCOME' if trans_type == 'Income' else 'EXPENSE'} "
             " VALUES (:name,:desc, julianday(:date), :money_type, :cheque_number, :amount)",
