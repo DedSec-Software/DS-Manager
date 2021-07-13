@@ -1,5 +1,5 @@
-#  Copyright (C) 2020  Pakeetharan Balasupramaniyam <pakee@gmail.com>
-#  Copyright (C) 2020  Mohamed Zumair <mhdzumair@gmail.com>
+#  Copyright (C) 2020 - 2021  Pakeetharan Balasupramaniyam <pakee@gmail.com>
+#  Copyright (C) 2020 - 2021 Mohamed Zumair <mhdzumair@gmail.com>
 #
 #      This program is free software: you can redistribute it and/or modify
 #      it under the terms of the GNU General Public License as published by
@@ -63,15 +63,7 @@ class Model:
         cheque_number,
         amount: float,
     ):
-        print(
-            trans_type,
-            method_of_trans,
-            description,
-            date,
-            source_table,
-            cheque_number,
-            amount,
-        )
+        
         self.cursor.execute(
             f"INSERT INTO {'INCOME' if trans_type == 'Income' else 'EXPENSE'} "
             " VALUES (:name,:desc, julianday(:date), :money_type, :cheque_number, :amount)",

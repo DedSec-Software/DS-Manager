@@ -1,4 +1,4 @@
-#  Copyright (c) 2020. Mohamed Zumair <mhdzumair@gmail.com
+#  Copyright (c) 2020 - 2021. Mohamed Zumair <mhdzumair@gmail.com
 
 
 class NotEnoughMoney(Exception):

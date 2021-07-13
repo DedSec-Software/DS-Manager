@@ -134,7 +134,7 @@ class Ui_About(object):
         self.label_9.setObjectName(u"label_9")
         self.label_9.setGeometry(QRect(170, 360, 91, 91))
         self.label_9.setStyleSheet(u"QLabel>qpixmap{\n" "	border-radius: 50%;\n" "}")
-        self.label_9.setPixmap(QPixmap(u":/images/new.png"))
+        self.label_9.setPixmap(QPixmap(u":/images/panchali.png"))
         self.label_9.setScaledContents(True)
 
         self.retranslateUi(About)
@@ -152,7 +152,7 @@ class Ui_About(object):
         self.label.setText("")
         self.label_2.setText(
             QCoreApplication.translate(
-                "About", u"DedSec Manager - Copyright \u00a9 2020", None
+                "About", u"DedSec Manager - Copyright \u00a9 2020 - 2021", None
             )
         )
         self.label_3.setText(

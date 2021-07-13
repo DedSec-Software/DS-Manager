@@ -1,5 +1,3 @@
 PySide2
-mongoengine
-pymongo[srv]
 reportlab
 pdf2image
